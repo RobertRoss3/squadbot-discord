@@ -17,6 +17,7 @@
     "dotenv": "^8.2.0",
     "forecast": "^0.3.2",
     "google-spreadsheet": "^2.0.6",
+    "mime": "^2.4.6",
     "node-wolfram": "0.0.1",
     "request": "2.81.0",
     "xmldom": "^0.3.0",
