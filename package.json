@@ -16,7 +16,7 @@
     "discord.js": "^11.6.4",
     "dotenv": "^8.2.0",
     "forecast": "^0.3.2",
-    "google-spreadsheet": "^3.0.11",
+    "google-spreadsheet": "^2.0.6",
     "node-wolfram": "0.0.1",
     "request": "2.81.0",
     "xmldom": "^0.3.0",
