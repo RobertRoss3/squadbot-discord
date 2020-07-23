@@ -1,0 +1,16 @@
+{
+  "name": "squadbot-discord",
+  "version": "1.0.0",
+  "description": "Discord bot for squad",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "author": "Robert Ross",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.6.4",
+    "dotenv": "^8.2.0",
+    "request": "2.81.0"
+  }
+}
