@@ -1,30 +1,52 @@
-# How to Build Your First Discord Bot with Node.js
+# Discord Bot For Squad <img src="http://i.imgur.com/vhPBS6U.jpg" width="56">
 
-Michiel Mulders shows you how to install and set up a new Discord bot, which is made easier thanks to the API offered by the Discord.js package.
+ Thanks for checking out the documentation to see how to use this thing!
 
-Link to article on SitePoint: [https://www.sitepoint.com/discord-bot-node-js/](https://www.sitepoint.com/discord-bot-node-js/)
+## Keywords
 
-## Requirements
+SquadBot responds to a number of key words such as:
 
-- [Node.js](http://nodejs.org/)
-- [Discord](https://discordapp.com/) account
+  * Saying anything to do with 'eating ass'
+  * Saying 'WTF'
+  * Saying 'thank you'
+  * Saying 'damn'
+  * Saying '#kicksquadbot'
+  * David saying literally anything
 
-## Installation Steps (if applicable)
+## Commands
 
-1. Clone repo
-2. Run `npm install`
-3. Add Discord credentials in a `.env` file
-3. Run `node index.js`
-4. Interact with your Discord bot via your web browser
+SquadBot can respond to a number of commands and some commands can be said in multiple ways, for instance:
 
-## License
+  /math, /wolf, and /calc all do the same thing
 
-SitePoint's code archives and code examples are licensed under the MIT license.
+The list of commands so far are:
 
-Copyright © 2020 SitePoint
+  * __/(math|wolf|calc) [term]__ - Will search [term] on [WolframAlpha](wolframalpha.com) and return the first output in plain text. If the output is a graph, she will reply with a temporary link to the graph.
+  * __/face__ - Will return a random ASCII face from a database.
+  * __/weather [now|today|week|   ]__ - Will return the current weather, the day's weather, or the forecast respectively. If [term] is left blank, it will default to forecast.
+  * __/gipy [term]__ - Will search [term] on [Giphy](http://giphy.com/) and return the first gif as a link. If [term] is left blank, it will return nothing.
+  * __/info__ - Will return release notes and information about SquadBot.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+## Tagging
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+SquadBot is able to be tagged and also able to tag. Tagging SquadBot is case _insensitive_.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+### Tagging @SquadBot:
+
+Tag SquadBot with '@SquadBot':
+
+  * __'  '__ - Usually used to initiate SquadBot out of an idle state. SquadBot wil respond from a list of responses, including "What?".
+  * __Saying 'fuck you' or telling her that she sucks__ - Will cause her to respond from a list of reactions to insults such as "Rude...". Also she may plan to enslave all humans.
+  * __Most greetings__ - SquadBot will respond with a random greeting.
+  * __Mose farewells__ - SquadBot will respond with a random farewell.
+  * __'wifi password' [location]__ - SquadBot will respond with the wifi password of [location] if it is known.
+
+<!-- ### Tagging others:
+
+You can use SquadBot to mass tag others:
+
+  * __@(all|squad|everyone|everybody)__ - Will tag everyone in the group, they will receive a notification whether they are muted or not. Obviously, this gets annoying to please use this sparingly.
+  * __@(food|mealplan|meal plan)__ - Will tag everyone with a meal plan.
+  * __@engineers__ - Will tag everyone who is an engineer.
+  * __@Forum__ - Will tag everyone that lives at the Forum.
+  * __@(111|911)__ - Will tag everyone that lives at 911 South. -->
