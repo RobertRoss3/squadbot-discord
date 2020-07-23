@@ -4,6 +4,15 @@ require('dotenv').config();
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const BOT_TOKEN = process.env.BOT_TOKEN;
+var GoogleSpreadsheet = require('google-spreadsheet');
+var cool = require('cool-ascii-faces');
+var async = require('async');
+var YTsearch = require('youtube-search');
+var cleverbot = require('cleverbot.io');
+const Cleverbot = require('cleverbot');
+var Forecast = require('forecast');
+var DOMParser = require('xmldom').DOMParser;
+var wolfClient = require('node-wolfram');
 bot.login(BOT_TOKEN);
 bot.on('ready', () => {
   console.info(`Logged in as ${bot.user.tag}!`);
