@@ -163,6 +163,48 @@ async.series([
 });
 /////////////////////////////////////////////////////////////////////////////////////
 
+console.log("Starting up...");
+
+///   API KEYS AND ALL APIS USED
+/////////////////////////////////////////////////////////////////////////////////////
+var GiphyapiKey = process.env.GIPHY_API_KEY;
+var cleverUser = process.env.CLEVER_USER;
+var cleverKey = process.env.CLEVER_KEY;
+// Old way of creating Cleverbot instance
+    // cleverBot = new cleverbot(cleverUser,cleverKey);
+    let cleverBot = new cleverbot(cleverUser, cleverKey);
+    randomNumber = randomNumber = Math.floor(Math.random()*999);
+    session = 'Squadbot1'+randomNumber;
+    console.log("Loading Cleverbot AI session: " + session + "...")
+    cleverBot.setNick(session);
+    cleverBot.create(function (err, session) {
+    });
+    console.log("Cleverbot loading completed...")
+
+var weatherKey = process.env.WEATHER_KEY;
+var mathKey = process.env.MATH_KEY;
+    Wolfram = new wolfClient(mathKey);
+    console.log("Wolfram okay...")
+var YoutubeKey = process.env.YOUTUBE_API_KEY;
+var YTsearchopts = {
+  maxResults: 10,
+  key: YoutubeKey
+};
+
+console.log("Loading weather API...");
+var forecast = new Forecast({
+  service: 'darksky',
+  key: weatherKey,
+  units: 'fahrenheit',
+  cache: true,      // Cache API requests
+  ttl: {            // How long to cache requests. Uses syntax from moment.js: http://momentjs.com/docs/#/durations/creating/
+    minutes: 27,
+    seconds: 45
+  }
+});
+
+/////////////////////////////////////////////////////////////////////////////////////
+
 bot.on('message', msg => {
   if (msg.content === 'ping') {
     msg.reply('pong');
