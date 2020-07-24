@@ -32,9 +32,9 @@ var restarting = false;
 function delay(time) {var d1 = new Date();var d2 = new Date();while (d2.valueOf() < d1.valueOf() + time) {d2 = new Date();}}
 
 botInfo = "Hi, I'm SquadBot version 3.0.0! \n" +
-          "You can use commands like '/giphy [term]' and '/face' to post GIFs and ASCII faces. \n" +
-          "Use /weather [now|today|this week] to get the weather for those times. \n" +
-          "Use /math [problem] to solve math problems with WolframAlpha. \n" +
+          "You can use commands like '!giphy [term]' and '!face' to post GIFs and ASCII faces. \n" +
+          "Use !weather [now|today|this week] to get the weather for those times. \n" +
+          "Use !math [problem] to solve math problems with WolframAlpha. \n" +
           "I'll respond to certain key words and phrases and you can also @ me to chat. \n" +
           "You can see my source code and the rest of the documentation here: https://github.com/RobertRoss3/squadbot-discord";
 
@@ -400,11 +400,11 @@ bot.on('message', msg => {
     // ENTERED A COMMAND?
   if(message.content.charAt(0) == '!') {
 
-    if(/^([\/]giphy)/i.test(message.content)) {
+    if(/^([\!]giphy)/i.test(message.content)) {
       //likeMessage();
       searchGiphy(message.content.substring(7));
     }
-    else if(/^[\/]face$/i.test(message.content)){
+    else if(/^[\!]face$/i.test(message.content)){
       //likeMessage();
       postMessage(cool());
     }
@@ -439,7 +439,7 @@ bot.on('message', msg => {
     //     postMessage("You have to tag someone.");
     //   }
     // }
-    else if (/^\/\b(math|calc|wolf)\b/i.test(message.content)) {
+    else if (/^\!\b(math|calc|wolf)\b/i.test(message.content)) {
       // getMath(message.content.substring(5));
       //likeMessage();
       Wolfram.query(message.content.substring(6), function(err, result) {
@@ -510,36 +510,21 @@ bot.on('message', msg => {
       }
       //likeMessage();
     });}
-    else if(/\b(wifi|wi-fi)\s+password\b/im.test(message.content)){
-      postMessage("I don't know any relevent wifi codes yet");
-      //likeMessage();
-    } if (message.content == "/info") {
+    if (message.content == "!info") {
       //likeMessage();
       postMessage(botInfo);
-    } if (message.content == "/restart") {
+    } if (message.content == "!restart") {
       //likeMessage();
       restart();
-    } if (message.content == "/listmembers") {
-      //likeMessage();
-      API.Groups.show(accessToken, groupID, function(err,ret) {
-        if (!err) {
-          members = ret.members;
-          postMessage("Members are listed in the log!");
-          // console.log("MEMBERS: "+members.length);
-          console.log("Members: "+JSON.stringify(members));
-          console.log("Names: " + AllNames);
-          console.log("IDs: " + AllIDs);
-        } else {console.log("ERROR: FAILED GETTING GROUP INFO: " + err);}
-      });
     }
-    else if (/^([\/]quote)/i.test(message.content)) {
+    else if (/^([\!]quote)/i.test(message.content)) {
       if (!Quotes_info){hold(5000);if (!quotecount){hold(2000);}}
       //likeMessage();
       if (!botRegex_oneword.test(message.content)) {                  //If it's just "/quote"
         randomNumber = Math.floor(Math.random()*Quotes.length);
         postMessage(Quotes[randomNumber]);
       } else {
-        findQuote = message.content; findQuote = findQuote.replace(/[\/]quote /i,'');
+        findQuote = message.content; findQuote = findQuote.replace(/[\!]quote /i,'');
         botRegex_findQuote = new RegExp("\\b" + findQuote + "\\b","i");
         newQuotes = [];
         for(i = 0; i < Quotes.length; i++){                       //If a quote matches the search term, add it to a new list
@@ -558,7 +543,7 @@ bot.on('message', msg => {
         }
       }
     }
-    else if (/^([\/]8ball)/i.test(message.content)){
+    else if (/^([\!]8ball)/i.test(message.content)){
       //likeMessage();
       if(botRegex_oneword.test(message.content)){
       	names = ["Sara", "Lauren", "Amy", "Elias", "your mom", "your neighbor", "your conscience"];
@@ -584,9 +569,9 @@ bot.on('message', msg => {
       }
     }
     // Youtube Video Search
-    else if(/^\/\b(youtube|yt|video)\b/i.test(message.content)){
+    else if(/^\!\b(youtube|yt|video)\b/i.test(message.content)){
       //likeMessage();
-      searchTerm = message.content; searchTerm = searchTerm.replace(/\/\b(youtube|yt|video)\b/i,'');
+      searchTerm = message.content; searchTerm = searchTerm.replace(/\!\b(youtube|yt|video)\b/i,'');
       var resultNum = 0;
       if (/\([0-9]+\)/i.test(searchTerm)){
           textsearchTerm = searchTerm.replace(/\([0-9]+\)/i,'');
