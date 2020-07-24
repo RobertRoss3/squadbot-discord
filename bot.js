@@ -256,7 +256,7 @@ bot.on('message', msg => {
     }
 
   }
-  if(msg.content && msg.id != SquadBot && msg.id != SquadBot && /\b(wtf|wth|what the (hell|fuck))\b/i.test(msg.content)) {
+  if(msg.content && msg.author.id != SquadBot && msg.author.id != SquadBot && /\b(wtf|wth|what the (hell|fuck))\b/i.test(msg.content)) {
 
     randomNumber = Math.floor(Math.random()*5);
     if(randomNumber == 3) {
@@ -264,7 +264,7 @@ bot.on('message', msg => {
     }
 
   }
-  if(msg.content && msg.id != SquadBot && msg.id != SquadBot && /\b(fact|facts)\b/i.test(msg.content)) {
+  if(msg.content && msg.author.id != SquadBot && msg.author.id != SquadBot && /\b(fact|facts)\b/i.test(msg.content)) {
 
     //likeMessage();
     response = ["Fact? I know one! ","FACT: ","Here's a fact, ", "Fact time! ","Speaking of facts, did you know ",
@@ -316,7 +316,7 @@ bot.on('message', msg => {
   for (i=0;i<groupcount;i++){
     if(Group_regex[i].test(msg.content)){tagtest=true;}
   }
-  if(msg.content && msg.id != SquadBot && msg.id != SquadBot && tagtest) {
+  if(msg.content && msg.author.id != SquadBot && msg.author.id != SquadBot && tagtest) {
 
     //likeMessage();
     API.Groups.show(accessToken, groupID, function(err,ret) {
@@ -326,9 +326,9 @@ bot.on('message', msg => {
       } else {console.log("ERROR: FAILED GETTING GROUP INFO: " + err);}
     });
 
-    if (request.user_id == '') {postMessage("???");}
+    if (msg.author.id == '') {postMessage("???");}
     // If someone posts @all
-    // else if (request.user_id == John) {
+    // else if (msg.author.id == John) {
     //   postMessage("*crickets*");
     // }
     else {
@@ -341,7 +341,7 @@ bot.on('message', msg => {
           response = response.replace(/\"/ig,'');}
       }
       reslength = response.length;
-      response += request.name;
+      response += msg.author.username;
       if ((botRegex_oneword.test(msg.content))) {
         response += ' says: ' + msg.content;
       }
@@ -353,7 +353,7 @@ bot.on('message', msg => {
       }
       usersID = []; usersLoci = [];
       for (i=0; i < AllIDs.length; i++){
-        if(msg.id != SquadBot) {
+        if(msg.author.id != SquadBot) {
           grouptagtest = false;
           if(Group_regex[0].test(msg.content) && Group[0][3].indexOf(AllIDs[i]) == -1){
             grouptagtest = true;
@@ -607,7 +607,7 @@ bot.on('message', msg => {
 
   }
 
-  if((msg.id != SquadBot && msg.id != SquadBot ) && msg.content && /(\b(eat|eating|eats|ate) ass\b)(.*?)/i.test(msg.content)) {
+  if((msg.author.id != SquadBot && msg.author.id != SquadBot ) && msg.content && /(\b(eat|eating|eats|ate) ass\b)(.*?)/i.test(msg.content)) {
 
     response = ["Eating ass never was, isn't, and never will be cool.",
                 "Can we not talk about eating ass right now?", userName + " NO",
@@ -617,12 +617,12 @@ bot.on('message', msg => {
     postMessage(response[randomNumber]);
 
   }
-  if ((msg.id != SquadBot && msg.id != SquadBot) && msg.content && /^(?=.*\b(issa|it's a)\b)(?=.*\joke\b).*$/i.test(msg.content)) {
+  if ((msg.author.id != SquadBot && msg.author.id != SquadBot) && msg.content && /^(?=.*\b(issa|it's a)\b)(?=.*\joke\b).*$/i.test(msg.content)) {
     //likeMessage();
     response = 'https://i.groupme.com/1215x2160.jpeg.95f793f6ae824fa782c88bd96dfd8b1b.large';
     postMessage(response);
   }
-  if((msg.id != SquadBot && msg.id != SquadBot) && msg.content && /\b(thanks|(thank you)|thx)\b/i.test(msg.content)) {
+  if((msg.author.id != SquadBot && msg.author.id != SquadBot) && msg.content && /\b(thanks|(thank you)|thx)\b/i.test(msg.content)) {
 
     randomNumber2 = randomNumber = Math.floor(Math.random()*10);
     if (randomNumber2 == 5) {
@@ -634,7 +634,7 @@ bot.on('message', msg => {
     }
 
   }
-  if (msg.content && request.sender_id == '18252184') {
+  if (msg.content && msg.author.id == '18252184') {
 
     console.log("Pulling trigger...");
     randomNumber = Math.floor(Math.random()*15);
@@ -645,7 +645,7 @@ bot.on('message', msg => {
     }
 
   }
-  if((msg.id != SquadBot && msg.id != SquadBot) && msg.content && /#kicksquadbot/i.test(msg.content)) {
+  if((msg.author.id != SquadBot && msg.author.id != SquadBot) && msg.content && /#kicksquadbot/i.test(msg.content)) {
 
     response = ["#kickyourself", "Whatever. I'm here forever...",
                 "I'd like to see you try.", "Initiating KILLALLHUMANS.exe...",
@@ -653,7 +653,7 @@ bot.on('message', msg => {
     randomNumber = Math.floor(Math.random()*response.length);
     postMessage(response[randomNumber]);
 
-  } if((msg.id != SquadBot && msg.id != SquadBot) && msg.content && tagRegex_bot.test(msg.content)) {
+  } if((msg.author.id != SquadBot && msg.author.id != SquadBot) && msg.content && tagRegex_bot.test(msg.content)) {
       if(/(\bhi|hello|hey|heyo|sup|wassup\b).*?/i.test(msg.content) || /\b(good morning)\b/i.test(msg.content)) {
 
       response = ["Hello!", "What\'s up?", "Hey.", "Hi!", "How are you on this fine day?", "😜", "Yo.","giphy hi","giphy hello"];
@@ -769,7 +769,7 @@ bot.on('message', msg => {
   }
   // seclast_userName = last_userName; seclast_userIDNum = last_userIDNum;
   // seclast_response = last_response;
-  // last_userName = request.name; last_userIDNum = request.user_id;
+  // last_userName = msg.author.username; last_userIDNum = msg.author.id;
   // last_response = msg.content;
 });
 
