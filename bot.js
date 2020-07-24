@@ -227,8 +227,8 @@ var forecast = new Forecast({
 bot.on('message', msg => {
   message = msg;
   userName = message.author.username; userIDNum = message.author.id;
-  channel = message.channel.name; channelID = message.channel_id;
-  console.log(userName + " (" + userIDNum + ") posted in " + channelID + ": \n" + msg);
+  channel = message.channel; channelID = message.channel.id;
+  console.log(userName + " (" + userIDNum + ") posted in " + channel + ": \n" + JSON.parse(msg));
   askme = false;
 
   if(message.content && !botRegex_oneword.test(message.content)) {
