@@ -17,6 +17,7 @@ bot.login(BOT_TOKEN);
 bot.on('ready', () => {
   console.info(`Logged in as ${bot.user.tag}!`);
 });
+var message;
 /////////////////////////////////////////////////////////////////////////////////////
 
 ///   GENERAL FUNCTIONS AND VARIABLES
@@ -209,28 +210,30 @@ var forecast = new Forecast({
 /////////////////////////////////////////////////////////////////////////////////////
 
 // bot.on('message', msg => {
-//   if (msg.content === 'ping') {
-//     msg.reply('pong');
-//     msg.channel.send('pong');
+//   if (message.content === 'ping') {
+//     message.reply('pong');
+//     message.channel.send('pong');
 //
-//   } else if (msg.content.startsWith('!kick')) {
-//     if (msg.mentions.users.size) {
-//       const taggedUser = msg.mentions.users.first();
-//       msg.channel.send(`You wanted to kick: ${taggedUser.username}`);
+//   } else if (message.content.startsWith('!kick')) {
+//     if (message.mentions.users.size) {
+//       const taggedUser = message.mentions.users.first();
+//       message.channel.send(`You wanted to kick: ${taggedUser.username}`);
 //     } else {
-//       msg.reply('Please tag a valid user!');
+//       message.reply('Please tag a valid user!');
 //     }
 //   }
 // });
 
 bot.on('message', msg => {
-  userName = msg.author.username; userIDNum = msg.author.id;
-  console.log(userName + " (" + userIDNum + ") posted: "+ msg);
+  message = msg;
+  userName = message.author.username; userIDNum = message.author.id;
+  channel = message.channel.name; channelID = message.channel_id;
+  console.log(userName + " (" + userIDNum + ") posted in " + channelID + ": \n" + msg);
   askme = false;
 
-  if(msg.content && !botRegex_oneword.test(msg.content)) {
+  if(message.content && !botRegex_oneword.test(message.content)) {
 
-    if (/damn\b/gi.test(msg.content)) {
+    if (/damn\b/gi.test(message.content)) {
       //likeMessage();
       response = ["- Kendrick Lamar","- Jamal Rogers",
                   "- Some random beaver", "- Craig and Smokey",
@@ -240,7 +243,7 @@ bot.on('message', msg => {
       response = response[randomNumber];
       postMessage(response);
     }
-    else if (tagRegex_bot.test(msg.content)) {
+    else if (tagRegex_bot.test(message.content)) {
       //likeMessage();
       response = ["What?","What is it?", "?",
                   "Yes?", "I'm awake!", "How can I help?",
@@ -256,7 +259,7 @@ bot.on('message', msg => {
     }
 
   }
-  if(msg.content && msg.author.id != SquadBot && msg.author.id != SquadBot && /\b(wtf|wth|what the (hell|fuck))\b/i.test(msg.content)) {
+  if(message.content && message.author.id != SquadBot && message.author.id != SquadBot && /\b(wtf|wth|what the (hell|fuck))\b/i.test(message.content)) {
 
     randomNumber = Math.floor(Math.random()*5);
     if(randomNumber == 3) {
@@ -264,7 +267,7 @@ bot.on('message', msg => {
     }
 
   }
-  if(msg.content && msg.author.id != SquadBot && msg.author.id != SquadBot && /\b(fact|facts)\b/i.test(msg.content)) {
+  if(message.content && message.author.id != SquadBot && message.author.id != SquadBot && /\b(fact|facts)\b/i.test(message.content)) {
 
     //likeMessage();
     response = ["Fact? I know one! ","FACT: ","Here's a fact, ", "Fact time! ","Speaking of facts, did you know ",
@@ -276,13 +279,13 @@ bot.on('message', msg => {
     postMessage(response);
 
   }
-  if(msg.content == "tick"){
+  if(message.content == "tick"){
 
     postMessage("tock");
     //likeMessage();
 
   }
-  if(/^(BULLSHIT|SPOILER) ALERT/i.test(msg.content)){
+  if(/^(BULLSHIT|SPOILER) ALERT/i.test(message.content)){
     var newtime = new Date().getTime() / 1000;
     if (newtime < refresh + 10) {
       response = ["You\'re doing that too much...",
@@ -314,9 +317,9 @@ bot.on('message', msg => {
   tagtest = false;
   if (!Groups_info){delay(5000);if (!groupcount){delay(2000);}}
   for (i=0;i<groupcount;i++){
-    if(Group_regex[i].test(msg.content)){tagtest=true;}
+    if(Group_regex[i].test(message.content)){tagtest=true;}
   }
-  if(msg.content && msg.author.id != SquadBot && msg.author.id != SquadBot && tagtest) {
+  if(message.content && message.author.id != SquadBot && message.author.id != SquadBot && tagtest) {
 
     //likeMessage();
     API.Groups.show(accessToken, groupID, function(err,ret) {
@@ -326,24 +329,24 @@ bot.on('message', msg => {
       } else {console.log("ERROR: FAILED GETTING GROUP INFO: " + err);}
     });
 
-    if (msg.author.id == '') {postMessage("???");}
+    if (message.author.id == '') {postMessage("???");}
     // If someone posts @all
-    // else if (msg.author.id == John) {
+    // else if (message.author.id == John) {
     //   postMessage("*crickets*");
     // }
     else {
       // When a group is tagged, generate a random response
       for(i=0;i<groupcount;i++){
-        if(Group_regex[i].test(msg.content)){
+        if(Group_regex[i].test(message.content)){
           response = Group_response[i];
           randomNumber = Math.floor(Math.random()*response.length);
           response = response[randomNumber];
           response = response.replace(/\"/ig,'');}
       }
       reslength = response.length;
-      response += msg.author.username;
-      if ((botRegex_oneword.test(msg.content))) {
-        response += ' says: ' + msg.content;
+      response += message.author.username;
+      if ((botRegex_oneword.test(message.content))) {
+        response += ' says: ' + message.content;
       }
       else if (userIDNum == last_userIDNum) {
         response += ' says: ' + last_response;
@@ -353,13 +356,13 @@ bot.on('message', msg => {
       }
       usersID = []; usersLoci = [];
       for (i=0; i < AllIDs.length; i++){
-        if(msg.author.id != SquadBot) {
+        if(message.author.id != SquadBot) {
           grouptagtest = false;
-          if(Group_regex[0].test(msg.content) && Group[0][3].indexOf(AllIDs[i]) == -1){
+          if(Group_regex[0].test(message.content) && Group[0][3].indexOf(AllIDs[i]) == -1){
             grouptagtest = true;
           } else {
             for(j=1;j<groupcount;j++){
-              if(Group_regex[j].test(msg.content) && Group[j][3].indexOf(AllIDs[i]) > -1){
+              if(Group_regex[j].test(message.content) && Group[j][3].indexOf(AllIDs[i]) > -1){
                 grouptagtest = true;}
             }
           }
@@ -372,7 +375,7 @@ bot.on('message', msg => {
       usersLoci = usersLoci.filter(function(n){ return n != undefined });
       usersID = usersID.filter(function(n){ return n != undefined });
       misfire = /\b(Squad (mother|father|ginger))\b/i;
-      if (misfire.test(msg.content)){
+      if (misfire.test(message.content)){
         //temp fix for tagging names with "squad" in it
       } else {
         var newtime = new Date().getTime() / 1000;
@@ -395,17 +398,17 @@ bot.on('message', msg => {
     }
   }
     // ENTERED A COMMAND?
-  if(msg.content.charAt(0) == '!') {
+  if(message.content.charAt(0) == '!') {
 
-    if(/^([\/]giphy)/i.test(msg.content)) {
+    if(/^([\/]giphy)/i.test(message.content)) {
       //likeMessage();
-      searchGiphy(msg.content.substring(7));
+      searchGiphy(message.content.substring(7));
     }
-    else if(/^[\/]face$/i.test(msg.content)){
+    else if(/^[\/]face$/i.test(message.content)){
       //likeMessage();
       postMessage(cool());
     }
-    // else if(/^([\/](whois|who is))/i.test(msg.content)) {
+    // else if(/^([\/](whois|who is))/i.test(message.content)) {
     //   attachments = request.attachments[0];
     //   if(attachments){
     //     if(attachments.type == 'mentions'){
@@ -419,7 +422,7 @@ bot.on('message', msg => {
     //           thisName = "";
     //         }
     //         stringstart = attachments.loci[id][0]+1; stringend = stringstart+attachments.loci[id][1]-1;
-    //         response += msg.content.substring(stringstart,stringend);
+    //         response += message.content.substring(stringstart,stringend);
     //         response += " has the ID "+attachments.user_ids[id]+" and is ";
     //         if(thisName){
     //             response += "listed as \""+thisName+"\".";
@@ -436,10 +439,10 @@ bot.on('message', msg => {
     //     postMessage("You have to tag someone.");
     //   }
     // }
-    else if (/^\/\b(math|calc|wolf)\b/i.test(msg.content)) {
-      // getMath(msg.content.substring(5));
+    else if (/^\/\b(math|calc|wolf)\b/i.test(message.content)) {
+      // getMath(message.content.substring(5));
       //likeMessage();
-      Wolfram.query(msg.content.substring(6), function(err, result) {
+      Wolfram.query(message.content.substring(6), function(err, result) {
         if(err)
             console.log(err);
         else {
@@ -473,7 +476,7 @@ bot.on('message', msg => {
           }
         }
     });}
-    else if (/\bweather\b/i.test(msg.content)) {
+    else if (/\bweather\b/i.test(message.content)) {
       Regexnow = /\b(now|current)\b/i; Regextoday = /\b(today|day)\b/i;
       Regexweek = /\b(this week)|(for the week)|(week)\b/i;
       // Retrieve weather information from Statesboro
@@ -492,10 +495,10 @@ bot.on('message', msg => {
       forecast.get([32.4128, -81.7957], function(err, weather) {
         if(err) return console.log(err);
 
-      if (Regexnow.test(msg.content)) {
+      if (Regexnow.test(message.content)) {
         postMessage("Current weather is " + weather.currently.summary.toLowerCase() +
                     " with a temperature of " + weather.currently.temperature + "°F.");
-      } else if (Regexweek.test(msg.content)) {
+      } else if (Regexweek.test(message.content)) {
         // console.log(weather.daily);
         postMessage("Weather this week is " + weather.daily.summary);
       } else {
@@ -507,16 +510,16 @@ bot.on('message', msg => {
       }
       //likeMessage();
     });}
-    else if(/\b(wifi|wi-fi)\s+password\b/im.test(msg.content)){
+    else if(/\b(wifi|wi-fi)\s+password\b/im.test(message.content)){
       postMessage("I don't know any relevent wifi codes yet");
       //likeMessage();
-    } if (msg.content == "/info") {
+    } if (message.content == "/info") {
       //likeMessage();
       postMessage(botInfo);
-    } if (msg.content == "/restart") {
+    } if (message.content == "/restart") {
       //likeMessage();
       restart();
-    } if (msg.content == "/listmembers") {
+    } if (message.content == "/listmembers") {
       //likeMessage();
       API.Groups.show(accessToken, groupID, function(err,ret) {
         if (!err) {
@@ -529,14 +532,14 @@ bot.on('message', msg => {
         } else {console.log("ERROR: FAILED GETTING GROUP INFO: " + err);}
       });
     }
-    else if (/^([\/]quote)/i.test(msg.content)) {
+    else if (/^([\/]quote)/i.test(message.content)) {
       if (!Quotes_info){hold(5000);if (!quotecount){hold(2000);}}
       //likeMessage();
-      if (!botRegex_oneword.test(msg.content)) {                  //If it's just "/quote"
+      if (!botRegex_oneword.test(message.content)) {                  //If it's just "/quote"
         randomNumber = Math.floor(Math.random()*Quotes.length);
         postMessage(Quotes[randomNumber]);
       } else {
-        findQuote = msg.content; findQuote = findQuote.replace(/[\/]quote /i,'');
+        findQuote = message.content; findQuote = findQuote.replace(/[\/]quote /i,'');
         botRegex_findQuote = new RegExp("\\b" + findQuote + "\\b","i");
         newQuotes = [];
         for(i = 0; i < Quotes.length; i++){                       //If a quote matches the search term, add it to a new list
@@ -555,9 +558,9 @@ bot.on('message', msg => {
         }
       }
     }
-    else if (/^([\/]8ball)/i.test(msg.content)){
+    else if (/^([\/]8ball)/i.test(message.content)){
       //likeMessage();
-      if(botRegex_oneword.test(msg.content)){
+      if(botRegex_oneword.test(message.content)){
       	names = ["Sara", "Lauren", "Amy", "Elias", "your mom", "your neighbor", "your conscience"];
       	randomNumber3 = Math.floor(Math.random()*names.length);
 
@@ -581,9 +584,9 @@ bot.on('message', msg => {
       }
     }
     // Youtube Video Search
-    else if(/^\/\b(youtube|yt|video)\b/i.test(msg.content)){
+    else if(/^\/\b(youtube|yt|video)\b/i.test(message.content)){
       //likeMessage();
-      searchTerm = msg.content; searchTerm = searchTerm.replace(/\/\b(youtube|yt|video)\b/i,'');
+      searchTerm = message.content; searchTerm = searchTerm.replace(/\/\b(youtube|yt|video)\b/i,'');
       var resultNum = 0;
       if (/\([0-9]+\)/i.test(searchTerm)){
           textsearchTerm = searchTerm.replace(/\([0-9]+\)/i,'');
@@ -607,7 +610,7 @@ bot.on('message', msg => {
 
   }
 
-  if((msg.author.id != SquadBot && msg.author.id != SquadBot ) && msg.content && /(\b(eat|eating|eats|ate) ass\b)(.*?)/i.test(msg.content)) {
+  if((message.author.id != SquadBot && message.author.id != SquadBot ) && message.content && /(\b(eat|eating|eats|ate) ass\b)(.*?)/i.test(message.content)) {
 
     response = ["Eating ass never was, isn't, and never will be cool.",
                 "Can we not talk about eating ass right now?", userName + " NO",
@@ -617,12 +620,12 @@ bot.on('message', msg => {
     postMessage(response[randomNumber]);
 
   }
-  if ((msg.author.id != SquadBot && msg.author.id != SquadBot) && msg.content && /^(?=.*\b(issa|it's a)\b)(?=.*\joke\b).*$/i.test(msg.content)) {
+  if ((message.author.id != SquadBot && message.author.id != SquadBot) && message.content && /^(?=.*\b(issa|it's a)\b)(?=.*\joke\b).*$/i.test(message.content)) {
     //likeMessage();
     response = 'https://i.groupme.com/1215x2160.jpeg.95f793f6ae824fa782c88bd96dfd8b1b.large';
     postMessage(response);
   }
-  if((msg.author.id != SquadBot && msg.author.id != SquadBot) && msg.content && /\b(thanks|(thank you)|thx)\b/i.test(msg.content)) {
+  if((message.author.id != SquadBot && message.author.id != SquadBot) && message.content && /\b(thanks|(thank you)|thx)\b/i.test(message.content)) {
 
     randomNumber2 = randomNumber = Math.floor(Math.random()*10);
     if (randomNumber2 == 5) {
@@ -634,7 +637,7 @@ bot.on('message', msg => {
     }
 
   }
-  if (msg.content && msg.author.id == '18252184') {
+  if (message.content && message.author.id == '18252184') {
 
     console.log("Pulling trigger...");
     randomNumber = Math.floor(Math.random()*15);
@@ -645,7 +648,7 @@ bot.on('message', msg => {
     }
 
   }
-  if((msg.author.id != SquadBot && msg.author.id != SquadBot) && msg.content && /#kicksquadbot/i.test(msg.content)) {
+  if((message.author.id != SquadBot && message.author.id != SquadBot) && message.content && /#kicksquadbot/i.test(message.content)) {
 
     response = ["#kickyourself", "Whatever. I'm here forever...",
                 "I'd like to see you try.", "Initiating KILLALLHUMANS.exe...",
@@ -653,8 +656,8 @@ bot.on('message', msg => {
     randomNumber = Math.floor(Math.random()*response.length);
     postMessage(response[randomNumber]);
 
-  } if((msg.author.id != SquadBot && msg.author.id != SquadBot) && msg.content && tagRegex_bot.test(msg.content)) {
-      if(/(\bhi|hello|hey|heyo|sup|wassup\b).*?/i.test(msg.content) || /\b(good morning)\b/i.test(msg.content)) {
+  } if((message.author.id != SquadBot && message.author.id != SquadBot) && message.content && tagRegex_bot.test(message.content)) {
+      if(/(\bhi|hello|hey|heyo|sup|wassup\b).*?/i.test(message.content) || /\b(good morning)\b/i.test(message.content)) {
 
       response = ["Hello!", "What\'s up?", "Hey.", "Hi!", "How are you on this fine day?", "😜", "Yo.","giphy hi","giphy hello"];
       randomNumber = Math.floor(Math.random()*response.length);
@@ -667,13 +670,13 @@ bot.on('message', msg => {
         postMessage(response);
       }
 
-    } else if (/\b(thanks|(thank you)|thx)\b/i.test(msg.content)) {
+    } else if (/\b(thanks|(thank you)|thx)\b/i.test(message.content)) {
       response = ["You're welcome! 😊", "Don't mention it!",
                   "No problem.", "Any time.","np","yw", "😘"];
       randomNumber = Math.floor(Math.random()*response.length);
       //likeMessage();
       postMessage(response[randomNumber]);
-    } else if (/\b(good night)|(bye)|(goodbye)|(goodnight)\b/i.test(msg.content)) {
+    } else if (/\b(good night)|(bye)|(goodbye)|(goodnight)\b/i.test(message.content)) {
       response = ["Okay, bye!", "Laters.", "See ya!",
                   "In a while, crocodile.", "Good riddance.", "👋",
                   "Didn\'t wanna talk anyway...", "Peace.", "Peace out.", "✌",
@@ -687,7 +690,7 @@ bot.on('message', msg => {
       } else {
         postMessage(response);
       }
-    } else if(/(\b(fuck|fuck you|suck|sucks)\b)(.*?)/i.test(msg.content)) {
+    } else if(/(\b(fuck|fuck you|suck|sucks)\b)(.*?)/i.test(message.content)) {
 
       response = ["Well fuck you too.", "Why you gotta be so mean?",
                   "Whatever", "Rude...", "Ok...and?", "Damn okay then...", "😒",
@@ -702,7 +705,7 @@ bot.on('message', msg => {
       }
 
     }
-    // else if(/\bban\b/i.test(msg.content)) {
+    // else if(/\bban\b/i.test(message.content)) {
     //
     //   attachments = request.attachments[0];
     //   response = "";
@@ -711,7 +714,7 @@ bot.on('message', msg => {
     //   if(UserIDs.length>1){
     //     for(id=1;id<UserIDs.length;id++){
     //       stringstart = attachments.loci[id][0]+1; stringend = stringstart+attachments.loci[id][1]-1;
-    //       response += msg.content.substring(stringstart,stringend);
+    //       response += message.content.substring(stringstart,stringend);
     //       response += ", ";
     //     }
     //     response2 = ["YOU ARE BANNED! GTFO!!!!","if I see you again, I'm slapping the shit outta you",
@@ -733,7 +736,7 @@ bot.on('message', msg => {
     // }
     else if (!askme) {
 
-      cleverQuestion = msg.content;
+      cleverQuestion = message.content;
       cleverQuestion = cleverQuestion.replace(/@squadbot(dev|)/i,'');
       if (cleverQuestion) {
         console.log("Contacting Cleverbot AI server with: \"" + cleverQuestion + "\"");
@@ -769,8 +772,8 @@ bot.on('message', msg => {
   }
   // seclast_userName = last_userName; seclast_userIDNum = last_userIDNum;
   // seclast_response = last_response;
-  // last_userName = msg.author.username; last_userIDNum = msg.author.id;
-  // last_response = msg.content;
+  // last_userName = message.author.username; last_userIDNum = message.author.id;
+  // last_response = message.content;
 });
 
 console.log("Response okay...")
@@ -910,7 +913,7 @@ function xmlToJson(xml) {
 function postMessage(botResponse,type,args) {
   var botResponse, type, args, options, body, botReq, guid;
   delay(1500);
-  msg.channel.send(botResponse);
+  message.channel.send(botResponse);
   // if(type=='tag'){
   //   options = {
   //   'message':{
