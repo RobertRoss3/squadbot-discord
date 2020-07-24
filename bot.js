@@ -234,7 +234,7 @@ bot.on('message', msg => {
   if(message.content && !botRegex_oneword.test(message.content)) {
 
     if (/damn\b/gi.test(message.content)) {
-      //likeMessage();
+      //reactMessage();
       response = ["- Kendrick Lamar","- Jamal Rogers",
                   "- Some random beaver", "- Craig and Smokey",
                   "- Florida Evans","- Anthony Fantano",
@@ -244,7 +244,7 @@ bot.on('message', msg => {
       postMessage(response);
     }
     else if (tagRegex_bot.test(message.content)) {
-      //likeMessage();
+      //reactMessage();
       response = ["What?","What is it?", "?",
                   "Yes?", "I'm awake!", "How can I help?",
                   "Huh?","You called?","giphy huh",
@@ -269,7 +269,7 @@ bot.on('message', msg => {
   }
   if(message.content && message.author.id != SquadBot && message.author.id != SquadBot && /\b(fact|facts)\b/i.test(message.content)) {
 
-    //likeMessage();
+    //reactMessage();
     response = ["Fact? I know one! ","FACT: ","Here's a fact, ", "Fact time! ","Speaking of facts, did you know ",
                 "I know a thing or two about facts, like ", "Oh! Did you know that ", "Actually, ", "True, but "];
     randomNumber1 = Math.floor(Math.random()*response.length);
@@ -282,7 +282,7 @@ bot.on('message', msg => {
   if(message.content == "tick"){
 
     postMessage("tock");
-    //likeMessage();
+    //reactMessage();
 
   }
   if(/^(BULLSHIT|SPOILER) ALERT/i.test(message.content)){
@@ -321,7 +321,7 @@ bot.on('message', msg => {
   }
   if(message.content && message.author.id != SquadBot && message.author.id != SquadBot && tagtest) {
 
-    //likeMessage();
+    //reactMessage();
     API.Groups.show(accessToken, groupID, function(err,ret) {
       if (!err) {
         members = ret.members;
@@ -401,11 +401,11 @@ bot.on('message', msg => {
   if(message.content.charAt(0) == '!') {
 
     if(/^([\!]giphy)/i.test(message.content)) {
-      //likeMessage();
+      //reactMessage();
       searchGiphy(message.content.substring(7));
     }
     else if(/^[\!]face$/i.test(message.content)){
-      //likeMessage();
+      //reactMessage();
       postMessage(cool());
     }
     // else if(/^([\/](whois|who is))/i.test(message.content)) {
@@ -414,7 +414,7 @@ bot.on('message', msg => {
     //     if(attachments.type == 'mentions'){
     //       response = "";
     //       UserIDs = attachments.user_ids;
-    //       //likeMessage();
+    //       //reactMessage();
     //       for(id=0;id<UserIDs.length;id++){
     //         if(Member_id.includes(attachments.user_ids[id])){
     //           thisName = Member_name[Member_id.indexOf(attachments.user_ids[id])];
@@ -441,7 +441,7 @@ bot.on('message', msg => {
     // }
     else if (/^\!\b(math|calc|wolf)\b/i.test(message.content)) {
       // getMath(message.content.substring(5));
-      //likeMessage();
+      //reactMessage();
       Wolfram.query(message.content.substring(6), function(err, result) {
         if(err)
             console.log(err);
@@ -508,18 +508,18 @@ bot.on('message', msg => {
         postMessage("Weather today is " + hourlySummary +
                     " with an average temperature of " + weather.hourly.data[0].temperature + "°F.");
       }
-      //likeMessage();
+      //reactMessage();
     });}
     if (message.content == "!info") {
-      //likeMessage();
+      //reactMessage();
       postMessage(botInfo);
     } if (message.content == "!restart") {
-      //likeMessage();
+      //reactMessage();
       restart();
     }
     else if (/^([\!]quote)/i.test(message.content)) {
       if (!Quotes_info){hold(5000);if (!quotecount){hold(2000);}}
-      //likeMessage();
+      //reactMessage();
       if (!botRegex_oneword.test(message.content)) {                  //If it's just "/quote"
         randomNumber = Math.floor(Math.random()*Quotes.length);
         postMessage(Quotes[randomNumber]);
@@ -544,7 +544,7 @@ bot.on('message', msg => {
       }
     }
     else if (/^([\!]8ball)/i.test(message.content)){
-      //likeMessage();
+      //reactMessage();
       if(botRegex_oneword.test(message.content)){
       	names = ["Sara", "Lauren", "Amy", "Elias", "your mom", "your neighbor", "your conscience"];
       	randomNumber3 = Math.floor(Math.random()*names.length);
@@ -570,7 +570,7 @@ bot.on('message', msg => {
     }
     // Youtube Video Search
     else if(/^\!\b(youtube|yt|video)\b/i.test(message.content)){
-      //likeMessage();
+      //reactMessage();
       searchTerm = message.content; searchTerm = searchTerm.replace(/\!\b(youtube|yt|video)\b/i,'');
       var resultNum = 0;
       if (/\([0-9]+\)/i.test(searchTerm)){
@@ -606,7 +606,7 @@ bot.on('message', msg => {
 
   }
   if ((message.author.id != SquadBot && message.author.id != SquadBot) && message.content && /^(?=.*\b(issa|it's a)\b)(?=.*\joke\b).*$/i.test(message.content)) {
-    //likeMessage();
+    //reactMessage();
     response = 'https://i.groupme.com/1215x2160.jpeg.95f793f6ae824fa782c88bd96dfd8b1b.large';
     postMessage(response);
   }
@@ -617,7 +617,7 @@ bot.on('message', msg => {
       response = ["You're welcome! 😊", "Don't mention it!",
                   "No problem.", "Any time."];
       randomNumber = Math.floor(Math.random()*response.length);
-      //likeMessage();
+      //reactMessage();
       postMessage(response[randomNumber]);
     }
 
@@ -647,7 +647,7 @@ bot.on('message', msg => {
       response = ["Hello!", "What\'s up?", "Hey.", "Hi!", "How are you on this fine day?", "😜", "Yo.","giphy hi","giphy hello"];
       randomNumber = Math.floor(Math.random()*response.length);
       response = response[randomNumber];
-      //likeMessage();
+      //reactMessage();
       if(/giphy/i.test(response)){
         response = response.replace(/giphy/i, '');
         searchGiphy(response);
@@ -659,7 +659,7 @@ bot.on('message', msg => {
       response = ["You're welcome! 😊", "Don't mention it!",
                   "No problem.", "Any time.","np","yw", "😘"];
       randomNumber = Math.floor(Math.random()*response.length);
-      //likeMessage();
+      //reactMessage();
       postMessage(response[randomNumber]);
     } else if (/\b(good night)|(bye)|(goodbye)|(goodnight)\b/i.test(message.content)) {
       response = ["Okay, bye!", "Laters.", "See ya!",
@@ -668,7 +668,7 @@ bot.on('message', msg => {
                    "giphy bye", "giphy goodbye", "giphy peace"];
       randomNumber = Math.floor(Math.random()*response.length);
       response = response[randomNumber];
-      //likeMessage();
+      //reactMessage();
       if(/giphy/i.test(response)){
         response = response.replace(/giphy/i, '');
         searchGiphy(response);
@@ -695,7 +695,7 @@ bot.on('message', msg => {
     //   attachments = request.attachments[0];
     //   response = "";
     //   UserIDs = attachments.user_ids;
-    //   //likeMessage();
+    //   //reactMessage();
     //   if(UserIDs.length>1){
     //     for(id=1;id<UserIDs.length;id++){
     //       stringstart = attachments.loci[id][0]+1; stringend = stringstart+attachments.loci[id][1]-1;
@@ -736,7 +736,7 @@ bot.on('message', msg => {
         		newresponse = newresponse[randomNumber];
             postMessage(newresponse);
           } else {
-            //likeMessage();
+            //reactMessage();
             if (userIDNum==SquadBot){
               if (last_userIDNum == SquadBot){
                 userName = seclast_userName; userIDNum = seclast_userIDNum;
@@ -767,7 +767,7 @@ console.log("Response okay...")
 /////////////////////////////////////////////////////////////////////////////////////
 function hold(ms){
   console.log("Holding for " + ms + " milliseconds...")
-  //likeMessage();
+  //reactMessage();
   response = ["😪 ya gimmie a sec...","Woah, I'm awake!",
               "LOADING...", "Oh oh! I know this one!",
               "*wakes up*","*sips coffee*",
@@ -929,12 +929,11 @@ function postMessage(botResponse,type,args) {
   // }
 };
 
-// function likeMessage(messageID) {
-//   API.Likes.create(accessToken,groupID,messageID, function(err,res) {
-//     if (!err) {
-//     } else {console.log('LIKING FAILED: ERROR ' + JSON.stringify(err));}
-//   });
-// };
+function reactMessage(reaction) {
+  message.react(reaction)
+    .then(console.log)
+    .catch(console.error);
+};
 
 function restart(){
   if(userIDNum=="28758543"){
