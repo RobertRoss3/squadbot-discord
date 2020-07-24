@@ -228,7 +228,7 @@ bot.on('message', msg => {
   message = msg;
   userName = message.author.username; userIDNum = message.author.id;
   channel = message.channel; channelID = message.channel.id;
-  console.log(userName + " (" + userIDNum + ") posted in " + channel + ": \n" + JSON.parse(msg));
+  console.log(userName + " (" + userIDNum + ") posted in " + channel + ": \n" + JSON.stringify(msg));
   askme = false;
 
   if(message.content && !botRegex_oneword.test(message.content)) {
