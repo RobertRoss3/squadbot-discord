@@ -206,7 +206,10 @@ bot.on('message', msg => {
   channel = message.channel.name; channelID = message.channel.id;
   console.log(userName + " (" + userIDNum + ") posted in " + channel + " ("+ channelID + "):");
   if (message.mentions.users.size) {
-    console.log("and mentioned: " + message.mentions.users.length + " people");
+    var users_mentioned;
+    message.mentions.users
+      .each(user => users_mentioned += user.username + "(" + user.id + "), ");
+    console.log("and mentioned: " + users_mentioned);
   }
   console.log(message.content);
   askme = false;
