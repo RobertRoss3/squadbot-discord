@@ -9,9 +9,8 @@ const BOT_TOKEN = process.env.BOT_TOKEN;
 var GoogleSpreadsheet = require('google-spreadsheet');
 var cool = require('cool-ascii-faces');
 var async = require('async');
+const Cleverbot = require('cleverbot');
 var YTsearch = require('youtube-search');
-// var cleverbot = require('cleverbot.io');
-// const Cleverbot = require('cleverbot');
 var Forecast = require('forecast');
 var DOMParser = require('xmldom').DOMParser;
 var wolfClient = require('node-wolfram');
@@ -161,6 +160,10 @@ var GiphyapiKey = process.env.GIPHY_API_KEY;
 //     cleverBot.create(function (err, session) {
 //     });
 //     console.log("Cleverbot loading completed...")
+
+let clev = new Cleverbot({
+  key: process.env.CLEVER_KEY
+});
 
 var weatherKey = process.env.WEATHER_KEY;
 var mathKey = process.env.MATH_KEY;
@@ -619,8 +622,19 @@ bot.on('message', msg => {
       } else {
         postMessage("You have tag them too, not just me.");
       }
+    } else if (!askme) {
+      cleverQuestion = message.content;
+      cleverQuestion = cleverQuestion.replace(tagRegex_bot,'');
+      if (cleverQuestion) {
+        console.log("Contacting Cleverbot AI server with: \"" + cleverQuestion + "\"");
+        clev.query()
+        .then(function (response){
+          console.log(response.output);
+        });
+      }
     }
-  } else {
+  }
+  else {
   //...
   }
 });
