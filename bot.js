@@ -495,7 +495,6 @@ bot.on('message', msg => {
     else {
       // postMessage("That isn't a valid command...");
     }
-
   }
   // Someone tried to use the old tagging system
   if(message.content.charAt(0) == '@' && /\@(all|GSU)/ig.test(message.content)) {
@@ -551,6 +550,7 @@ bot.on('message', msg => {
     postMessage(response[randomNumber]);
 
   } if((message.author.id != SquadBot && !message.author.bot) && message.content && tagRegex_bot.test(message.content)) {
+
       if(/(\bhi|hello|hey|heyo|sup|wassup\b).*?/i.test(message.content) || /\b(good morning)\b/i.test(message.content)) {
 
       response = ["Hello!", "What\'s up?", "Hey.", "Hi!", "How are you on this fine day?", "😜", "Yo.","giphy hi","giphy hello"];
@@ -597,12 +597,11 @@ bot.on('message', msg => {
       } else {
         postMessage(response);
       }
-    }
-    else if(/\bban\b/i.test(message.content)) {
+    } else if(/\bban\b/i.test(message.content)) {
       reactMessage('👩‍⚖️');
       if(users_mentioned.length>1){
         for(i=1;i<users_mentioned.length;i++){
-          response += users_mentioned[i].toString();
+          response = users_mentioned.toString();
         }
         response2 = ["YOU ARE BANNED! GTFO!!!!","if I see you again, I'm slapping the shit outta you",
         "go away.", "I will FLING you into THE SUN", userName + " doesn't like you.", "yeah imma need you to get outta here",
@@ -621,30 +620,8 @@ bot.on('message', msg => {
         postMessage("You have tag them too, not just me.");
       }
     }
-    else if (!askme) {
-      // cleverQuestion = message.content;
-      // cleverQuestion = cleverQuestion.replace(/@squadbot(dev|)/i,'');
-      // if (cleverQuestion) {
-      //   console.log("Contacting Cleverbot AI server with: \"" + cleverQuestion + "\"");
-      //   cleverBot.ask(cleverQuestion, function (err, response) {
-      //     if (response == "Error, the reference \"\" does not exist" || response == 'Site error' || /(\b(Session not initialized)\b)(.*?)/i.test(response)) {
-      //       console.log("ERROR: CLEVERBOT ERROR: " + response)
-      //   		newresponse = ["I have nothing to say to that...",
-      //   		"I've lost my voice at the moment, try again later.",
-      //   		"I can't talk right now.",
-      //   		"My AI module has failed.", "I'm mute for the time being..."];
-      //   		randomNumber = Math.floor(Math.random()*newresponse.length);
-      //   		newresponse = newresponse[randomNumber];
-      //       postMessage(newresponse);
-      //     } else {
-      //       reactMessage('❤');
-      //       response = "@"+userName+" " + response;
-      //       postMessage(response,'tag',[[[0,userName.length+1]],[userIDNum]]);
-      //     }
-      //   });
-      // }
-    } else {
-    //...
+  } else {
+  //...
   }
 });
 
