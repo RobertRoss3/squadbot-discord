@@ -206,9 +206,9 @@ bot.on('message', msg => {
   channel = message.channel.name; channelID = message.channel.id;
   console.log(userName + " (" + userIDNum + ") posted in " + channel + " ("+ channelID + "):");
   if (message.mentions.users.size) {
-    console.log("and mentioned: " + message.mentions.users);
+    console.log("and mentioned: " + JSON.stringify(message.mentions.users));
   }
-  console.log(msg);
+  console.log(JSON.stringify(msg));
   askme = false;
 
   if(message.content && !botRegex_oneword.test(message.content)) {
