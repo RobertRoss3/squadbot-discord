@@ -148,23 +148,9 @@ console.log("Starting up...");
 ///   API KEYS AND ALL APIS USED
 /////////////////////////////////////////////////////////////////////////////////////
 var GiphyapiKey = process.env.GIPHY_API_KEY;
-// var cleverUser = process.env.CLEVER_USER;
-// var cleverKey = process.env.CLEVER_KEY;
-// // Old way of creating Cleverbot instance
-//     // cleverBot = new cleverbot(cleverUser,cleverKey);
-//     let cleverBot = new cleverbot(cleverUser, cleverKey);
-//     randomNumber = randomNumber = Math.floor(Math.random()*999);
-//     session = 'Squadbot1'+randomNumber;
-//     console.log("Loading Cleverbot AI session: " + session + "...")
-//     cleverBot.setNick(session);
-//     cleverBot.create(function (err, session) {
-//     });
-//     console.log("Cleverbot loading completed...")
-
 let clev = new Cleverbot({
   key: process.env.CLEVER_KEY
 });
-
 var weatherKey = process.env.WEATHER_KEY;
 var mathKey = process.env.MATH_KEY;
     Wolfram = new wolfClient(mathKey);
@@ -629,7 +615,10 @@ bot.on('message', msg => {
         console.log("Contacting Cleverbot AI server with: \"" + cleverQuestion + "\"");
         clev.query()
         .then(function (response){
-          console.log(response.output);
+          cleverResponse = response.output;
+          console.log("Cleverbot responded: " + cleverResponse);
+          cleverResponse = "<@" + userIDNum + "> " + cleverResponse;
+          postMessage(cleverResponse);
         });
       }
     }
