@@ -1,6 +1,8 @@
 ///   REQUIRES & SETUP
 /////////////////////////////////////////////////////////////////////////////////////
 require('dotenv').config();
+var HTTPS = require('https');
+var HTTP = require('http');
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const BOT_TOKEN = process.env.BOT_TOKEN;
