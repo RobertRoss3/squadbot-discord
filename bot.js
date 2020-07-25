@@ -73,7 +73,7 @@ async.series([
   },
   //  Gets information about the members
   function getMemberInfo(step) {
-    Members_info.getCells({'min-row': 2,'max-row': 100,'min-col': 1,'max-col': 3,'return-empty': false},
+    Members_info.getCells({'min-row': 2,'max-row': 100,'min-col': 1,'max-col': 3,'return-empty': true},
     function(err, cells) {
       if(cells === undefined){hold(3000);}
       membercount = cells.length/3;
@@ -90,7 +90,7 @@ async.series([
   },
   //  Gets information about the channels
   function getChannelInfo(step) {
-    Channels_info.getCells({'min-row': 2,'max-row': 100,'min-col': 1,'max-col': 2,'return-empty': false},
+    Channels_info.getCells({'min-row': 2,'max-row': 100,'min-col': 1,'max-col': 2,'return-empty': true},
     function(err, cells) {
       if(cells === undefined){hold(3000);}
       membercount = cells.length/2;
