@@ -73,7 +73,7 @@ async.series([
   },
   //  Gets information about the members
   function getMemberInfo(step) {
-    Members_info.getCells({'min-row': 2,'max-row': 100,'min-col': 1,'max-col': 3,'return-empty': true},
+    Members_info.getCells({'min-row': 2,'max-row': 32,'min-col': 1,'max-col': 3,'return-empty': true},
     function(err, cells) {
       if(cells === undefined){hold(3000);}
       membercount = cells.length/3;
@@ -90,7 +90,7 @@ async.series([
   },
   //  Gets information about the channels
   function getChannelInfo(step) {
-    Channels_info.getCells({'min-row': 2,'max-row': 100,'min-col': 1,'max-col': 2,'return-empty': true},
+    Channels_info.getCells({'min-row': 2,'max-row': 10,'min-col': 1,'max-col': 2,'return-empty': true},
     function(err, cells) {
       if(cells === undefined){hold(3000);}
       membercount = cells.length/2;
@@ -292,11 +292,6 @@ bot.on('message', msg => {
       searchGiphy(topic[randomNumber2]);
       refresh = newtime;
     }
-  }
-  tagtest = false;
-  if (!Groups_info){delay(5000);if (!groupcount){delay(2000);}}
-  for (i=0;i<groupcount;i++){
-    if(Group_regex[i].test(message.content)){tagtest=true;}
   }
     // ENTERED A COMMAND?
   if(message.content.charAt(0) == '!') {
