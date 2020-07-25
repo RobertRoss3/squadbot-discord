@@ -76,7 +76,7 @@ async.series([
     Members_info.getCells({'min-row': 2,'max-row': 100,'min-col': 1,'max-col': 3,'return-empty': true},
     function(err, cells) {
       if(cells === undefined){hold(3000);}
-      membercount = cells.length/2;
+      membercount = cells.length/3;
       console.log("Counted "+membercount+" members...");
       Member = []; Member_name = []; Member_id = [];
       for (i = 0; i < membercount; i++){
@@ -97,8 +97,8 @@ async.series([
       console.log("Counted "+membercount+" members...");
       Channel = []; Channel_name = []; Channel_id = [];
       for (i = 0; i < membercount; i++){
-          Channel_name[i] = cells[(i*3)].value;
-          Channel_id[i] = cells[(i*3)+2].value;
+          Channel_name[i] = cells[(i*2)].value;
+          Channel_id[i] = cells[(i*2)+1].value;
           Channel[i] = [Channel_id[i], Channel_name[i]];
       }
       step();
