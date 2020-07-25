@@ -18,6 +18,7 @@ bot.on('ready', () => {
   console.info(`Logged in as ${bot.user.tag}!`);
 });
 var message;
+var users_mentioned;
 /////////////////////////////////////////////////////////////////////////////////////
 
 ///   GENERAL FUNCTIONS AND VARIABLES
@@ -206,7 +207,7 @@ bot.on('message', msg => {
   channel = message.channel.name; channelID = message.channel.id;
   console.log(userName + " (" + userIDNum + ") posted in " + channel + " ("+ channelID + "):");
   if (message.mentions.users.size) {
-    var users_mentioned = message.mentions.users.array();
+    users_mentioned = message.mentions.users.array();
     console.log("and mentioned: " + users_mentioned);
   }
   console.log(message.content);
