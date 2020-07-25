@@ -602,6 +602,7 @@ bot.on('message', msg => {
       reactMessage('👩‍⚖️');
       if(users_mentioned.length>1){
         response = users_mentioned.toString();
+        response.replace(tagRegex_bot, "");
         }
         response2 = ["YOU ARE BANNED! GTFO!!!!","if I see you again, I'm slapping the shit outta you",
         "go away.", "I will FLING you into THE SUN", userName + " doesn't like you.", "yeah imma need you to get outta here",
@@ -612,8 +613,8 @@ bot.on('message', msg => {
           response = response.replace(/giphy/i, '');
           searchGiphy(response);
         } else {
-          response += response2[randomNumber];
           response += " ";
+          response += response2[randomNumber];
           postMessage(response);
         }
       } else {
