@@ -622,7 +622,7 @@ bot.on('message', msg => {
         //   // cleverResponse = "<@" + userIDNum + "> " + cleverResponse;
         //   postMessage(cleverResponse,'reply');
         // });
-        CleverbotFree(cleverQuestion).then(response => console.log(response));
+        CleverbotFree(cleverQuestion).then(response => postMessage(response,'reply'));
       }
     }
   }
