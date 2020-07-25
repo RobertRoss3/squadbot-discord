@@ -638,8 +638,7 @@ bot.on('message', msg => {
       //     }
       //   });
       // }
-    }
-  } else {
+    } else {
     //...
   }
 });
