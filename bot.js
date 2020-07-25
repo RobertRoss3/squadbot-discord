@@ -207,7 +207,7 @@ bot.on('message', msg => {
   console.log(userName + " (" + userIDNum + ") posted in " + channel + " ("+ channelID + "):");
   if (message.mentions.users.size) {
     var users_mentioned;
-    message.mentions.users
+    message.mentions.users[0]
       .each(user => users_mentioned += user.username + "(" + user.id + "), ");
     console.log("and mentioned: " + users_mentioned);
   }
