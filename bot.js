@@ -617,8 +617,8 @@ bot.on('message', msg => {
         .then(function (response){
           cleverResponse = response.output;
           console.log("Cleverbot responded: " + cleverResponse);
-          cleverResponse = "<@" + userIDNum + "> " + cleverResponse;
-          postMessage(cleverResponse);
+          // cleverResponse = "<@" + userIDNum + "> " + cleverResponse;
+          postMessage(cleverResponse,'reply');
         });
       }
     }
