@@ -814,7 +814,6 @@ function postMessage(botResponse,type,args) {
 
 function reactMessage(reaction) {
   message.react(reaction)
-    .then(console.log)
     .catch(console.error);
 };
 
