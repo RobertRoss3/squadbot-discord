@@ -614,7 +614,7 @@ bot.on('message', msg => {
         } else {
           response += response2[randomNumber];
           response += " ";
-          postMessage(response, 'mention');
+          postMessage(response);
         }
       } else {
         postMessage("You have tag them too, not just me.");
@@ -784,8 +784,8 @@ function xmlToJson(xml) {
 function postMessage(botResponse,type,args) {
   var botResponse, type, args, options, body, botReq, guid;
   delay(1500);
+  botResponse.replace(tagRegex_bot, "");
   if(type=='mention'){
-    botResponse.replace(tagRegex_bot, '');
     message.channel.send(botResponse);
   } else if (type == 'reply') {
     message.channel.reply(botResponse);
