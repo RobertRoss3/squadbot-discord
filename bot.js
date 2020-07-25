@@ -41,7 +41,7 @@ botInfo = "Hi, I'm SquadBot version 3.0.0! \n" +
 
 // All regular expressions or triggers for the bot
 botRegex_oneword = /\s\b/;
-tagRegex_bot = /@Squadbot.*?/i;
+tagRegex_bot = /(@Squadbot|<@!735964834331623505>).*?/i;
 /////////////////////////////////////////////////////////////////////////////////////
 
 ///  GETTING DATA FROM GOOGLE SPREADSHEET
@@ -596,35 +596,28 @@ bot.on('message', msg => {
       }
 
     }
-    // else if(/\bban\b/i.test(message.content)) {
-    //
-    //   attachments = request.attachments[0];
-    //   response = "";
-    //   UserIDs = attachments.user_ids;
-    //   reactMessage('❤');
-    //   if(UserIDs.length>1){
-    //     for(id=1;id<UserIDs.length;id++){
-    //       stringstart = attachments.loci[id][0]+1; stringend = stringstart+attachments.loci[id][1]-1;
-    //       response += message.content.substring(stringstart,stringend);
-    //       response += ", ";
-    //     }
-    //     response2 = ["YOU ARE BANNED! GTFO!!!!","if I see you again, I'm slapping the shit outta you",
-    //     "go away.", "I will FLING you into THE SUN", userName + " doesn't like you.", "yeah imma need you to get outta here",
-    //     "giphy go away", "giphy leave", "you don't gotta go home, but you gotta get the fuck up outta here"];
-    //     randomNumber = Math.floor(Math.random()*response2.length);
-    //     if(/giphy/i.test(response2[randomNumber])){
-    //       response = response2[randomNumber];
-    //       response = response.replace(/giphy/i, '');
-    //       searchGiphy(response);
-    //     } else {
-    //       response += response2[randomNumber];
-    //       postMessage(response);
-    //     }
-    //   } else {
-    //     postMessage("You have tag them too, not just me.")
-    //   }
-    //
-    // }
+    else if(/\bban\b/i.test(message.content)) {
+      reactMessage('❤');
+      if(users_mentioned.length>1){
+        response = users_mentioned.toString();
+        }
+        response2 = ["YOU ARE BANNED! GTFO!!!!","if I see you again, I'm slapping the shit outta you",
+        "go away.", "I will FLING you into THE SUN", userName + " doesn't like you.", "yeah imma need you to get outta here",
+        "giphy go away", "giphy leave", "you don't gotta go home, but you gotta get the fuck up outta here"];
+        randomNumber = Math.floor(Math.random()*response2.length);
+        if(/giphy/i.test(response2[randomNumber])){
+          response = response2[randomNumber];
+          response = response.replace(/giphy/i, '');
+          searchGiphy(response);
+        } else {
+          response += response2[randomNumber];
+          postMessage(response);
+        }
+      } else {
+        postMessage("You have tag them too, not just me.")
+      }
+
+    }
     else if (!askme) {
       // cleverQuestion = message.content;
       // cleverQuestion = cleverQuestion.replace(/@squadbot(dev|)/i,'');
