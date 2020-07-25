@@ -601,7 +601,7 @@ bot.on('message', msg => {
       reactMessage('👩‍⚖️');
       if(users_mentioned.length>1){
         for(i=1;i<users_mentioned.length;i++){
-          response = users_mentioned.toString();
+          response = users_mentioned[i].toString();
         }
         response2 = ["YOU ARE BANNED! GTFO!!!!","if I see you again, I'm slapping the shit outta you",
         "go away.", "I will FLING you into THE SUN", userName + " doesn't like you.", "yeah imma need you to get outta here",
