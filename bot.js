@@ -74,39 +74,39 @@ async.series([
       } else {console.log("ERROR: SPREADSHEET RETURNED UNDEFINED.")}
     });
   },
-  //  Gets information about the members
-  function getMemberInfo(step) {
-    Members_info.getCells({'min-row': 2,'max-row': 32,'min-col': 1,'max-col': 3,'return-empty': true},
-    function(err, cells) {
-      if(cells === undefined){hold(3000);}
-      membercount = cells.length/3;
-      console.log("Counted "+membercount+" members...");
-      Member = []; Member_name = []; Member_id = [];
-      for (i = 0; i < membercount; i++){
-          Member_name[i] = cells[(i*3)].value;
-          Member_id[i] = cells[(i*3)+2].value;
-          Member[i] = [Member_id[i], Member_name[i]];
-      }
-      Member_id.push(SquadBot); Member_name.push('SquadBot'); Member.push([SquadBot,'SquadBot']);
-      step();
-    });
-  },
-  //  Gets information about the channels
-  function getChannelInfo(step) {
-    Channels_info.getCells({'min-row': 2,'max-row': 10,'min-col': 1,'max-col': 2,'return-empty': true},
-    function(err, cells) {
-      if(cells === undefined){hold(3000);}
-      membercount = cells.length/2;
-      console.log("Counted "+membercount+" channels...");
-      Channel = []; Channel_name = []; Channel_id = [];
-      for (i = 0; i < membercount; i++){
-          Channel_name[i] = cells[(i*2)].value;
-          Channel_id[i] = cells[(i*2)+1].value;
-          Channel[i] = [Channel_id[i], Channel_name[i]];
-      }
-      step();
-    });
-  },
+  // //  Gets information about the members
+  // function getMemberInfo(step) {
+  //   Members_info.getCells({'min-row': 2,'max-row': 32,'min-col': 1,'max-col': 3,'return-empty': true},
+  //   function(err, cells) {
+  //     if(cells === undefined){hold(3000);}
+  //     membercount = cells.length/3;
+  //     console.log("Counted "+membercount+" members...");
+  //     Member = []; Member_name = []; Member_id = [];
+  //     for (i = 0; i < membercount; i++){
+  //         Member_name[i] = cells[(i*3)].value;
+  //         Member_id[i] = cells[(i*3)+2].value;
+  //         Member[i] = [Member_id[i], Member_name[i]];
+  //     }
+  //     Member_id.push(SquadBot); Member_name.push('SquadBot'); Member.push([SquadBot,'SquadBot']);
+  //     step();
+  //   });
+  // },
+  // //  Gets information about the channels
+  // function getChannelInfo(step) {
+  //   Channels_info.getCells({'min-row': 2,'max-row': 10,'min-col': 1,'max-col': 2,'return-empty': true},
+  //   function(err, cells) {
+  //     if(cells === undefined){hold(3000);}
+  //     membercount = cells.length/2;
+  //     console.log("Counted "+membercount+" channels...");
+  //     Channel = []; Channel_name = []; Channel_id = [];
+  //     for (i = 0; i < membercount; i++){
+  //         Channel_name[i] = cells[(i*2)].value;
+  //         Channel_id[i] = cells[(i*2)+1].value;
+  //         Channel[i] = [Channel_id[i], Channel_name[i]];
+  //     }
+  //     step();
+  //   });
+  // },
   //  Gets quotes
   function getQuotes(step){
     Quotes_info.getCells({'min-row': 2,'max-row': 300,'min-col': 1,'max-col': 1,'return-empty': false},
@@ -769,7 +769,7 @@ function postMessage(botResponse,type,args) {
   if(type=='mention'){
     message.channel.send(botResponse);
   } else if (type == 'reply') {
-    message.channel.reply(botResponse);
+    message.reply(botResponse);
   } else {
     message.channel.send(botResponse);
   };
