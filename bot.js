@@ -204,8 +204,11 @@ bot.on('message', msg => {
   message = msg;
   userName = message.author.username; userIDNum = message.author.id;
   channel = message.channel.name; channelID = message.channel.id;
-
-  console.log(userName + " (" + userIDNum + ") posted in " + channel + " ("+ channelID +"): \n" + msg);
+  console.log(userName + " (" + userIDNum + ") posted in " + channel + " ("+ channelID + "):");
+  if (message.mentions.users.size) {
+    console.log("and mentioned: " + message.mentions.users);
+  }
+  console.log(msg);
   askme = false;
 
   if(message.content && !botRegex_oneword.test(message.content)) {
@@ -409,7 +412,7 @@ bot.on('message', msg => {
       reactMessage('ℹ');
       postMessage(botInfo);
     } if (message.content == "!restart") {
-      reactMessage('🔄');
+      reactMessage('⚠');
       restart();
     }
     else if (/^([\!]quote)/i.test(message.content)) {
@@ -489,7 +492,11 @@ bot.on('message', msg => {
     }
 
   }
-
+  // Someone tried to use the old tagging system
+  if(message.content.charAt(0) == '@' && /\@(all|GSU)/ig.test(message.content)) {
+    reactMessage('❤');
+    postMessage("I don't do that anymore, try using one of the Discord tags (@ everyone)");
+  }
   if((message.author.id != SquadBot && !message.author.bot ) && message.content && /(\b(eat|eating|eats|ate) ass\b)(.*?)/i.test(message.content)) {
 
     response = ["Eating ass never was, isn't, and never will be cool.",
@@ -815,6 +822,7 @@ function postMessage(botResponse,type,args) {
 function reactMessage(reaction) {
   message.react(reaction)
     .catch(console.error);
+  console.log("Reacted: " + reaction);
 };
 
 function restart(){
