@@ -207,8 +207,7 @@ bot.on('message', msg => {
   channel = message.channel.name; channelID = message.channel.id;
   console.log(userName + " (" + userIDNum + ") posted in " + channel + " ("+ channelID + "):");
   if (message.mentions.users.size) {
-    users_mentioned = message.mentions.users[1].array();
-    userIDs_mentioned = message.mentions.users.array();
+    users_mentioned = message.mentions.users.array();
     console.log("and mentioned: " + users_mentioned);
   }
   console.log(message.content);
@@ -791,35 +790,20 @@ function xmlToJson(xml) {
 function postMessage(botResponse,type,args) {
   var botResponse, type, args, options, body, botReq, guid;
   delay(1500);
-  message.channel.send(botResponse);
-  // if(type=='tag'){
-  //   options = {
-  //   'message':{
-  //     'source_guid': guid,
-  //     'text': botResponse,
-  //     'attachments' : [{
-  //       'loci' : args[0],
-  //       'type' : 'mentions',
-  //       'user_ids' : args[1]
-  //     }]}
-  //   };
-  // }
-  //  else {
-  //   options = {
-  //     'message':{
-  //       'source_guid': guid,
-  //       'text': botResponse }
-  //     };
-  // };
-  // API.Messages.create(accessToken,groupID,options, function(err,res){
-  //   if (!err) {
-  //   } else {console.log('POSTING FAILED: ERROR ' + JSON.stringify(err));}
-  // });
-  // if(restarting){
-  //   restarting = false;
-  //   delay(2000);
-  //   process.exit(0);
-  // }
+  if(type=='mention'){
+    botResponse = args + botResponse;
+    message.channel.send(botResponse);
+  } else if (type == 'reply') {
+    message.channel.reply(botResponse);
+  } else {
+    message.channel.send(botResponse);
+  };
+
+  if(restarting){
+    restarting = false;
+    delay(2000);
+    process.exit(0);
+  }
 };
 
 function reactMessage(reaction) {
