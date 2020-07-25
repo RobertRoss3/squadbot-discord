@@ -594,10 +594,9 @@ bot.on('message', msg => {
       } else {
         postMessage(response);
       }
-
     }
     else if(/\bban\b/i.test(message.content)) {
-      reactMessage('❤');
+      reactMessage('👩‍⚖️');
       if(users_mentioned.length>1){
         response = users_mentioned.toString();
         }
@@ -614,9 +613,8 @@ bot.on('message', msg => {
           postMessage(response);
         }
       } else {
-        postMessage("You have tag them too, not just me.")
+        postMessage("You have tag them too, not just me.");
       }
-
     }
     else if (!askme) {
       // cleverQuestion = message.content;
