@@ -785,7 +785,7 @@ function reactMessage(reaction) {
 };
 
 function restart(){
-  if(userIDNum=="28758543"){
+  if(userIDNum=="298305393459855360"){
     console.log("Restarting...");
     response = ["Guess I fucked up!","Was it something I said?","Aw man...",
     "Oh...", "Sorry about that.","😒","Aight then..."];
