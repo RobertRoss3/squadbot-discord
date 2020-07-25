@@ -601,7 +601,8 @@ bot.on('message', msg => {
     else if(/\bban\b/i.test(message.content)) {
       reactMessage('👩‍⚖️');
       if(users_mentioned.length>1){
-        response = users_mentioned.toString();
+        for(i=1;i<users_mentioned.length;i++){
+          response += users_mentioned[i].toString();
         }
         response2 = ["YOU ARE BANNED! GTFO!!!!","if I see you again, I'm slapping the shit outta you",
         "go away.", "I will FLING you into THE SUN", userName + " doesn't like you.", "yeah imma need you to get outta here",
@@ -785,7 +786,6 @@ function postMessage(botResponse,type,args) {
   var botResponse, type, args, options, body, botReq, guid;
   delay(1500);
   botResponse.replace(tagRegex_bot, "");
-  botResponse.replace(/<\@(|\!)735964834331623505>,/ig, "");
   if(type=='mention'){
     message.channel.send(botResponse);
   } else if (type == 'reply') {
