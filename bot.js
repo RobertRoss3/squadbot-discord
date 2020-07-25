@@ -10,6 +10,7 @@ var GoogleSpreadsheet = require('google-spreadsheet');
 var cool = require('cool-ascii-faces');
 var async = require('async');
 const Cleverbot = require('cleverbot');
+const CleverbotFree = require("cleverbot-free");
 var YTsearch = require('youtube-search');
 var Forecast = require('forecast');
 var DOMParser = require('xmldom').DOMParser;
@@ -611,15 +612,17 @@ bot.on('message', msg => {
     } else if (!askme) {
       cleverQuestion = message.content;
       cleverQuestion = cleverQuestion.replace(tagRegex_bot,'');
+      cleverQuestion = cleverQuestion.replace(/^\s/gm,'');
       if (cleverQuestion) {
         console.log("Contacting Cleverbot AI server with: \"" + cleverQuestion + "\"");
-        clev.query()
-        .then(function (response){
-          cleverResponse = response.output;
-          console.log("Cleverbot responded: " + cleverResponse);
-          // cleverResponse = "<@" + userIDNum + "> " + cleverResponse;
-          postMessage(cleverResponse,'reply');
-        });
+        // clev.query()
+        // .then(function (response){
+        //   cleverResponse = response.output;
+        //   console.log("Cleverbot responded: " + cleverResponse);
+        //   // cleverResponse = "<@" + userIDNum + "> " + cleverResponse;
+        //   postMessage(cleverResponse,'reply');
+        // });
+        CleverbotFree(cleverQuestion).then(response => console.log(response));
       }
     }
   }
