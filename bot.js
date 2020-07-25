@@ -43,7 +43,8 @@ botInfo = "Hi, I'm SquadBot version 3.0.0! \n" +
 
 // All regular expressions or triggers for the bot
 botRegex_oneword = /\s\b/;
-tagRegex_bot = /(@Squadbot|<@!735964834331623505>).*?/i;
+// tagRegex_bot = /(@Squadbot|<@!735964834331623505>).*?/i;
+tagRegex_bot = new RegExp("<\@" + SquadBot + ">", "g");
 /////////////////////////////////////////////////////////////////////////////////////
 
 ///  GETTING DATA FROM GOOGLE SPREADSHEET
@@ -784,6 +785,7 @@ function postMessage(botResponse,type,args) {
   delay(1500);
   if(type=='mention'){
     botResponse = args + botResponse;
+    botResponse.replace(tagRegex_bot, '');
     message.channel.send(botResponse);
   } else if (type == 'reply') {
     message.channel.reply(botResponse);
