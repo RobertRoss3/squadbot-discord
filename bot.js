@@ -198,12 +198,17 @@ bot.on('message', msg => {
   message = msg;
   userName = message.author.username; userIDNum = message.author.id;
   channel = message.channel.name; channelID = message.channel.id;
+  //Most likely a DM
+  if (!channel){
+    channel = 'direct-message';
+  }
   console.log(userName + " (" + userIDNum + ") posted in " + channel + " ("+ channelID + "):");
   if (message.mentions.users.size) {
     users_mentioned = message.mentions.users.array();
     console.log("and mentioned: " + users_mentioned);
   }
   console.log(message.content);
+
   askme = false;
 
   if(message.content && !botRegex_oneword.test(message.content)) {
