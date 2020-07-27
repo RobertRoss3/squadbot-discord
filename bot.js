@@ -187,7 +187,7 @@ var forecast = new Forecast({
 //   } else if (message.content.startsWith('!kick')) {
 //     if (message.mentions.users.size) {
 //       const taggedUser = message.mentions.users.first();
-//       message.channel.send(`You wanted to kick: ${taggedUser.username}`);
+      // message.channel.send(`You wanted to kick: ${taggedUser.username}`);
 //     } else {
 //       message.reply('Please tag a valid user!');
 //     }
@@ -202,7 +202,8 @@ bot.on('message', msg => {
   if (!channel){
     channel = 'direct-message';
   }
-  console.log(userName + " (" + userIDNum + ") posted in " + channel + " ("+ channelID + "):");
+  // console.log(userName + " (" + userIDNum + ") posted in " + channel + " ("+ channelID + "):");
+  console.log('${userName} (${userIDNum}) posted in ${channel} (${channelID}):');
   if (message.mentions.users.size) {
     users_mentioned = message.mentions.users.array();
     console.log("and mentioned: " + users_mentioned);
@@ -627,7 +628,8 @@ bot.on('message', msg => {
         //   // cleverResponse = "<@" + userIDNum + "> " + cleverResponse;
         //   postMessage(cleverResponse,'reply');
         // });
-        CleverbotFree(cleverQuestion).then(response => postMessage(response,'reply'));
+        CleverbotFree(cleverQuestion)
+        .then(response => postMessage(response,'reply'));
       }
     }
   }
@@ -713,7 +715,7 @@ function searchGiphy(giphyToSearch, method) {
         } else {
           console.log("Available gifs: " + gifs.length);
           randomNumber = Math.floor(Math.random()*gifs.length);
-          if (gifs && gifs.length>0){
+          if (gifs.length>0){
             var id = gifs[randomNumber].id;
             //giphyURL = 'http://i.giphy.com/' + id + '.gif';
             giphyURL = 'https://media.giphy.com/media/' + id + '/giphy.gif';
