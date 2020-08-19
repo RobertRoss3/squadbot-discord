@@ -178,22 +178,6 @@ var forecast = new Forecast({
 
 ///   MAIN RESPONSE
 /////////////////////////////////////////////////////////////////////////////////////
-
-// bot.on('message', msg => {
-//   if (message.content === 'ping') {
-//     message.reply('pong');
-//     message.channel.send('pong');
-//
-//   } else if (message.content.startsWith('!kick')) {
-//     if (message.mentions.users.size) {
-//       const taggedUser = message.mentions.users.first();
-      // message.channel.send(`You wanted to kick: ${taggedUser.username}`);
-//     } else {
-//       message.reply('Please tag a valid user!');
-//     }
-//   }
-// });
-
 bot.on('message', msg => {
   message = msg;
   userName = message.author.username; userIDNum = message.author.id;
@@ -202,18 +186,16 @@ bot.on('message', msg => {
   if (!channel){
     channel = 'direct-message';
   }
-  // console.log(userName + " (" + userIDNum + ") posted in " + channel + " ("+ channelID + "):");
   console.log(`${userName} (${userIDNum}) posted in ${channel} (${channelID}):`);
   if (message.mentions.users.size) {
     users_mentioned = message.mentions.users.array();
-    console.log("and mentioned: " + users_mentioned);
+    console.log(`and mentioned: ${users_mentioned}`);
   }
   console.log(message.content);
 
   askme = false;
 
   if(message.content && !botRegex_oneword.test(message.content)) {
-
     if (/damn\b/gi.test(message.content)) {
       reactMessage('❤');
       response = ["- Kendrick Lamar","- Jamal Rogers",
@@ -225,7 +207,7 @@ bot.on('message', msg => {
       postMessage(response);
     }
     else if (tagRegex_bot.test(message.content)) {
-      reactMessage('❤');
+      reactMessage('⁉');
       response = ["What?","What is it?", "?",
                   "Yes?", "I'm awake!", "How can I help?",
                   "Huh?","You called?","giphy huh",
@@ -261,10 +243,8 @@ bot.on('message', msg => {
 
   }
   if(message.content == "tick"){
-
     postMessage("tock");
     reactMessage('❤');
-
   }
   if(/^(BULLSHIT|SPOILER) ALERT/i.test(message.content)){
     var newtime = new Date().getTime() / 1000;
@@ -279,12 +259,12 @@ bot.on('message', msg => {
       randomNumber = Math.floor(Math.random()*response.length);
       response = response[randomNumber];
       reactMessage('⏰');
-      postMessage(response);
+      postMessage(response,"reply");
     } else {
       response1 = ["Woah... ","Uh, ","Aight so ","OOOOOOOOOOOKAY ","😑 ","😶 ","😲 ","😱 ",'Nephew...', "This ain't it, chief...", "Aight I got this"];
       randomNumber = Math.floor(Math.random()*response1.length);
       response = response1[randomNumber];
-      response += "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+      response += ".\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.";
       response += "Looks like there's some fucked up shit up there! Here's a gif of ";
       topic = ['cat','duck','trippy','puppy','baby'];
       response2 = ['a cat!','a duck.','something trippy','puppies','a baby'];
@@ -307,39 +287,7 @@ bot.on('message', msg => {
       reactMessage('😁');
       postMessage(cool());
     }
-    // else if(/^([\/](whois|who is))/i.test(message.content)) {
-    //   attachments = request.attachments[0];
-    //   if(attachments){
-    //     if(attachments.type == 'mentions'){
-    //       response = "";
-    //       UserIDs = attachments.user_ids;
-    //       reactMessage('❤');
-    //       for(id=0;id<UserIDs.length;id++){
-    //         if(Member_id.includes(attachments.user_ids[id])){
-    //           thisName = Member_name[Member_id.indexOf(attachments.user_ids[id])];
-    //         } else {
-    //           thisName = "";
-    //         }
-    //         stringstart = attachments.loci[id][0]+1; stringend = stringstart+attachments.loci[id][1]-1;
-    //         response += message.content.substring(stringstart,stringend);
-    //         response += " has the ID "+attachments.user_ids[id]+" and is ";
-    //         if(thisName){
-    //             response += "listed as \""+thisName+"\".";
-    //         } else {
-    //             response += "not listed."
-    //         }
-    //         response += '\n';
-    //       }
-    //       postMessage(response);
-    //     } else {
-    //       postMessage("You have to tag someone.");
-    //     }
-    //   } else {
-    //     postMessage("You have to tag someone.");
-    //   }
-    // }
     else if (/^\!\b(math|calc|wolf)\b/i.test(message.content)) {
-      // getMath(message.content.substring(5));
       reactMessage('🧮');
       Wolfram.query(message.content.substring(6), function(err, result) {
         if(err)
@@ -351,9 +299,9 @@ bot.on('message', msg => {
               answer = result.queryresult.pod[1].subpod[0].img[0].$.src;
               // postMessage("Look at this...");
               console.log(answer);
-              response = ["The graph looks like this: ",
-                          "Look at this: ",
-                          "I drew it out for you: ",
+              response = ["The graph looks like this: ", "Check this out: ",
+                          "Look at this: ", "Here's a neat graphic:",
+                          "I drew it out for you: ", "How about this?",
                           "Here's a visual aid"];
               randomNumber = Math.floor(Math.random()*response.length);
               postMessage(response[randomNumber]);
@@ -366,12 +314,13 @@ bot.on('message', msg => {
                           "My calculations say the answer is: ",
                           "Ask your professor, my guess is ",
                           "You can\'t do that yourself? lol It\'s ",
-                          "Oh, that\'s easy! It\'s "];
+                          "Oh, that\'s easy! It\'s ",
+                          "I\'m gonna go with"];
               randomNumber = Math.floor(Math.random()*response.length);
               postMessage(response[randomNumber]+ "\n" + answer);
             }
           } else {
-            answer = "I can't calculate that...";
+            answer = "I can\'t calculate that...";
           }
         }
     });}
@@ -380,6 +329,7 @@ bot.on('message', msg => {
       Regexweek = /\b(this week)|(for the week)|(week)\b/i;
       // Retrieve weather information from Statesboro
       // Initialize
+      reactMessage('🌧');
       console.log("Getting current weather...");
       var forecast = new Forecast({
         service: 'darksky',
@@ -407,7 +357,6 @@ bot.on('message', msg => {
         postMessage("Weather today is " + hourlySummary +
                     " with an average temperature of " + weather.hourly.data[0].temperature + "°F.");
       }
-      reactMessage('🌧');
     });}
     if (message.content == "!info") {
       reactMessage('ℹ');
@@ -445,7 +394,7 @@ bot.on('message', msg => {
     else if (/^([\!]8ball)/i.test(message.content)){
       reactMessage('🎱');
       if(botRegex_oneword.test(message.content)){
-      	names = ["Sara", "Lauren", "Amy", "Elias", "your mom", "your neighbor", "your conscience"];
+      	names = ["your mom", "your neighbor", "your conscience", "a priest", "a psychic"];
       	randomNumber3 = Math.floor(Math.random()*names.length);
 
         response1 = ["My sources say ","Hmm... I'm gonna go with ", "Um... ", "Dude, ", "I think we both know the answer is ", "Let's just say ",
@@ -455,7 +404,7 @@ bot.on('message', msg => {
                 "fuck no","no","absolutely not","noooooooooooo","yes! jk, no", "yes","most likely, if you're not an idiot","definitely yes","yeah","it is certain","yussssss","absolutely","yes, but only if " + names[randomNumber3] + " says it's okay",
                  "without a doubt","yes, and make sure to hydrate","yes, 100%","totally","most likely","yeah, but wait a day","no. Wait nvm yes","yes... I think",
                  "I don't know","ask again later","I can't predict right now","think real hard first, then ask again","it's better not to tell you right now",
-                 "there's a good chance","a unanimous yes","ye probs","yeah nah nah yeah"
+                 "there's a good chance","a unanimous yes","ye probs","yeah nah nah yeah","maybe ask " + names[randomNumber3], "...sure..."
                  ];
 
       	randomNumber1 = Math.floor(Math.random()*response1.length);
@@ -493,7 +442,7 @@ bot.on('message', msg => {
     }
   }
   // Someone tried to use the old tagging system
-  if(message.content.charAt(0) == '@' && /\@(all|GSU)/ig.test(message.content)) {
+  if(/\@(all|GSU)/ig.test(message.content)) {
     reactMessage('❤');
     postMessage("I don't do that anymore, try using one of the Discord tags (@ everyone)");
   }
@@ -524,8 +473,7 @@ bot.on('message', msg => {
     }
 
   }
-  if (message.content && message.author.id == '18252184') {
-
+  if (message.content && message.author.id == '702731740002648156') {
     console.log("Pulling trigger...");
     randomNumber = Math.floor(Math.random()*15);
     if (randomNumber == 5) {
@@ -534,10 +482,8 @@ bot.on('message', msg => {
     } else {
       console.log("*click*...\'" + randomNumber + "\'");
     }
-
   }
   if((message.author.id != SquadBot && !message.author.bot) && message.content && /#kicksquadbot/i.test(message.content)) {
-
     response = ["#kickyourself", "Whatever. I'm here forever...",
                 "I'd like to see you try.", "Initiating KILLALLHUMANS.exe...",
                 "If I had feelings, they'd be hurt right now...", "😭😭😭", "😕"];
@@ -546,9 +492,7 @@ bot.on('message', msg => {
     postMessage(response[randomNumber]);
 
   } if((message.author.id != SquadBot && !message.author.bot) && message.content && tagRegex_bot.test(message.content)) {
-
-      if(/(\bhi|hello|hey|heyo|sup|wassup\b).*?/i.test(message.content) || /\b(good morning)\b/i.test(message.content)) {
-
+      if(/(\bhi|hello|hey|heyo|sup|wassup|good morning\b).*?/i.test(message.content) {
       response = ["Hello!", "What\'s up?", "Hey.", "Hi!", "How are you on this fine day?", "😜", "Yo.","giphy hi","giphy hello"];
       randomNumber = Math.floor(Math.random()*response.length);
       response = response[randomNumber];
@@ -620,12 +564,11 @@ bot.on('message', msg => {
       cleverQuestion = cleverQuestion.replace(tagRegex_bot,'');
       cleverQuestion = cleverQuestion.replace(/^\s/gm,'');
       if (cleverQuestion) {
-        console.log("Contacting Cleverbot AI server with: \"" + cleverQuestion + "\"");
+        console.log(`Contacting Cleverbot AI server with: \" ${cleverQuestion} \"`);
         // clev.query()
         // .then(function (response){
         //   cleverResponse = response.output;
         //   console.log("Cleverbot responded: " + cleverResponse);
-        //   // cleverResponse = "<@" + userIDNum + "> " + cleverResponse;
         //   postMessage(cleverResponse,'reply');
         // });
         CleverbotFree(cleverQuestion)
@@ -658,37 +601,6 @@ function hold(ms){
   do { d2 = new Date(); }
   while(d2-d < ms);
   console.log("End hold...")
-}
-
-function getMath(equation) {
-  var options = {
-    host: 'api.wolframalpha.com',
-    path: '/v2/query?input=' + equation + '&appid=' + mathKey
-  };
-
-  var callback = function(response) {
-    var str = '';
-
-    response.on('data', function(chunk){
-      str += chunk;
-    });
-
-    response.on('end', function() {
-      var parser = new DOMParser();
-      str = parser.parseFromString(str, "text/xml");
-      JSONstr = xmlToJson(str);
-      if (!(JSONstr)) {
-        postMessage('Can\'t calculate that...');
-        console.log("ERROR: WOLFRAM DID NOT SEND AN APPROPRIATE RESPONSE")
-      } else {
-        var response = JSONstr;
-        console.log("Wolfram response: ");
-        console.log(response);
-      }
-    });
-  };
-
-  HTTP.request(options, callback).end();
 }
 
 function searchGiphy(giphyToSearch, method) {
@@ -773,7 +685,7 @@ function xmlToJson(xml) {
 };
 
 function postMessage(botResponse,type,args) {
-  var botResponse, type, args, options, body, botReq, guid;
+  var botResponse, type, args;
   delay(1500);
   botResponse.replace(tagRegex_bot, "");
   if(type=='mention'){
@@ -794,7 +706,7 @@ function postMessage(botResponse,type,args) {
 function reactMessage(reaction) {
   message.react(reaction)
     .catch(console.error);
-  console.log("Reacted: " + reaction);
+  console.log(`"Reacted: ${reaction}`);
 };
 
 function restart(){
@@ -803,9 +715,9 @@ function restart(){
     response = ["Guess I fucked up!","Was it something I said?","Aw man...",
     "Oh...", "Sorry about that.","😒","Aight then..."];
     randomNumber = Math.floor(Math.random()*response.length);
-    response = response[randomNumber] += " Restarting...";
+    response = response[randomNumber];
     restarting = true;
-    postMessage(response);
+    postMessage(`${response} Restarting...`);
   } else {
     response = ["Nah...","https://media.giphy.com/media/fnuSiwXMTV3zmYDf6k/giphy.gif","Um... No?",
     "I'm not gonna do that.","Access denied: Unauthorized user","Error: Does not compute",
