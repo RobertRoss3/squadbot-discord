@@ -244,7 +244,7 @@ bot.on('message', msg => {
   }
   if(message.content == "tick"){
     postMessage("tock");
-    reactMessage('❤');
+    reactMessage('♥');
   }
   if(/^(BULLSHIT|SPOILER) ALERT/i.test(message.content)){
     var newtime = new Date().getTime() / 1000;
