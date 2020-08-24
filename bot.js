@@ -492,7 +492,7 @@ bot.on('message', msg => {
     postMessage(response[randomNumber]);
 
   } if((message.author.id != SquadBot && !message.author.bot) && message.content && tagRegex_bot.test(message.content)) {
-      if(/(\bhi|hello|hey|heyo|sup|wassup|good morning\b).*?/i.test(message.content) {
+      if(/(\bhi|hello|hey|heyo|sup|wassup|good morning\b).*?/i.test(message.content)){
       response = ["Hello!", "What\'s up?", "Hey.", "Hi!", "How are you on this fine day?", "😜", "Yo.","giphy hi","giphy hello"];
       randomNumber = Math.floor(Math.random()*response.length);
       response = response[randomNumber];
