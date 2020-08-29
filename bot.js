@@ -26,7 +26,8 @@ var users_mentioned;
 ///   GENERAL FUNCTIONS AND VARIABLES
 /////////////////////////////////////////////////////////////////////////////////////
 var refresh = (new Date().getTime() / 1000) - 120;
-var SquadBot = '735964834331623505';
+var SquadBot = process.env.BOT_ID_SQUADBOT;
+var Bots = process.env.BOT_ID_ALL;
 var giphyURL = 'http://i.giphy.com/l1J9EdzfOSgfyueLm.gif';
 noImage = "https://media.giphy.com/media/l1J9EdzfOSgfyueLm/giphy.gif";
 var restarting = false;
@@ -44,7 +45,7 @@ botInfo = "Hi, I'm SquadBot version 3.0.0! \n" +
 // All regular expressions or triggers for the bot
 botRegex_oneword = /\s\b/;
 // tagRegex_bot = /(@Squadbot|<@!735964834331623505>).*?/i;
-tagRegex_bot = new RegExp("<\@(|\!)" + SquadBot + ">", "g");
+tagRegex_bot = new RegExp(`<\@(|\!) (${SquadBot}|${Bots}) >`, "g");
 /////////////////////////////////////////////////////////////////////////////////////
 
 ///  GETTING DATA FROM GOOGLE SPREADSHEET
@@ -67,7 +68,7 @@ async.series([
     doc.getInfo(function(err, info) {
       if (info != null){
         //Loads document info and creates arrays that will be used for tagging and quoting
-        console.log('Loaded document: '+info.title+'... ');
+        console.log(`Loaded document: ${info.title}... `);
         Members_info = info.worksheets[0]; Channels_info = info.worksheets[1];
         Groups_info = info.worksheets[2]; Quotes_info = info.worksheets[3];
         Facts_info = info.worksheets[4];
@@ -114,7 +115,7 @@ async.series([
     function(err, cells){
       if(cells === undefined){hold(3000);}
       quotecount = cells.length;
-      console.log("Counted "+quotecount+" quotes...");
+      console.log(`Counted ${quotecount} quotes...`);
       Quotes = [];
       for (i = 0; i < quotecount; i++){
           Quotes[i] = cells[i].value;
@@ -128,7 +129,7 @@ async.series([
     function(err, cells){
       if(cells === undefined){hold(3000);}
       factcount = cells.length;
-      console.log("Counted "+factcount+" facts...");
+      console.log(`Counted ${factcount} facts...`);
       Facts = [];
       for (i = 0; i < factcount; i++){
           Facts[i] = cells[i].value;
@@ -139,7 +140,7 @@ async.series([
 
 ], function(err){
     if( err ) {
-      console.log('Error: '+err);
+      console.log(`Error: ${err}`);
     }
 });
 /////////////////////////////////////////////////////////////////////////////////////
@@ -186,7 +187,7 @@ bot.on('message', msg => {
   if (!channel){
     channel = 'direct-message';
   }
-  console.log(`${userName} (${userIDNum}) posted in ${channel} (${channelID}):`);
+  console.log(`${userName} (${userIDNum}) posted in #${channel} (${channelID}):`);
   if (message.mentions.users.size) {
     users_mentioned = message.mentions.users.array();
     console.log(`and mentioned: ${users_mentioned}`);
@@ -231,16 +232,17 @@ bot.on('message', msg => {
 
   }
   if(message.content && message.author.id != SquadBot && !message.author.bot && /\b(fact|facts)\b/i.test(message.content)) {
-
     reactMessage('🤓');
-    response = ["Fact? I know one! ","FACT: ","Here's a fact, ", "Fact time! ","Speaking of facts, did you know ",
-                "I know a thing or two about facts, like ", "Oh! Did you know that ", "Actually, ", "True, but "];
-    randomNumber1 = Math.floor(Math.random()*response.length);
-    randomNumber2 = Math.floor(Math.random()*factcount);
-    response = response[randomNumber1];
-    response += Facts[randomNumber2].charAt(0).toLowerCase() + Facts[randomNumber2].slice(1);
-    postMessage(response);
-
+    randomNumber0 = Math.floor(Math.random()*2);
+    if(randomNumber0 == 1){
+      response = ["Fact? I know one! ","FACT: ","Here's a fact, ", "Fact time! ","Speaking of facts, did you know ",
+                  "I know a thing or two about facts, like ", "Oh! Did you know that ", "Actually, ", "True, but "];
+      randomNumber1 = Math.floor(Math.random()*response.length);
+      randomNumber2 = Math.floor(Math.random()*factcount);
+      response = response[randomNumber1];
+      response += Facts[randomNumber2].charAt(0).toLowerCase() + Facts[randomNumber2].slice(1);
+      postMessage(response);
+    }
   }
   if(message.content == "tick"){
     postMessage("tock");
@@ -381,7 +383,7 @@ bot.on('message', msg => {
           }
         }
         if(newQuotes.length > 0) {
-          console.log("Found " + newQuotes.length + " matching quotes for \"" + findQuote + "\"...");
+          console.log(`Found ${newQuotes.length} matching quotes for "${findQuote}"...`);
           randomNumber2 = Math.floor(Math.random()*newQuotes.length);
           postMessage(newQuotes[randomNumber2].replace(/\\n/g,'\n'));
         } else {
@@ -430,7 +432,7 @@ bot.on('message', msg => {
           }
           searchTerm = textsearchTerm;
       }
-      console.log("Looking for video "+(resultNum+1)+"/10 of\""+searchTerm+"\"...");
+      console.log(`Looking for video ${resultNum+1}/10 of "${searchTerm}"...`);
       YTsearch(searchTerm, YTsearchopts, function(err, results) {
         if(err) return console.log("YOUTUBE SEARCH ERROR: " +err);
          console.dir(results[resultNum]);
@@ -564,7 +566,7 @@ bot.on('message', msg => {
       cleverQuestion = cleverQuestion.replace(tagRegex_bot,'');
       cleverQuestion = cleverQuestion.replace(/^\s/gm,'');
       if (cleverQuestion) {
-        console.log(`Contacting Cleverbot AI server with: \" ${cleverQuestion} \"`);
+        console.log(`Contacting Cleverbot AI server with: "${cleverQuestion}"`);
         // clev.query()
         // .then(function (response){
         //   cleverResponse = response.output;
@@ -586,7 +588,7 @@ console.log("Response okay...")
 ///   OTHER FUNCTIONS
 /////////////////////////////////////////////////////////////////////////////////////
 function hold(ms){
-  console.log("Holding for " + ms + " milliseconds...")
+  console.log(`Holding for ${ms} milliseconds...`)
   reactMessage('⏱');
   response = ["😪 ya gimmie a sec...","Woah, I'm awake!",
               "LOADING...", "Oh oh! I know this one!",
@@ -625,12 +627,12 @@ function searchGiphy(giphyToSearch, method) {
           console.log(JSON.stringify(gifs));
           postMessage(noImage);
         } else {
-          console.log("Available gifs: " + gifs.length);
+          console.log(`Available gifs: ${gifs.length}`);
           randomNumber = Math.floor(Math.random()*gifs.length);
           if (gifs.length>0){
             var id = gifs[randomNumber].id;
             //giphyURL = 'http://i.giphy.com/' + id + '.gif';
-            giphyURL = 'https://media.giphy.com/media/' + id + '/giphy.gif';
+            giphyURL = `https://media.giphy.com/media/${id}/giphy.gif`;
             postMessage(giphyURL);
           } else {
             postMessage(noImage);
