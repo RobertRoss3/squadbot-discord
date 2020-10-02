@@ -202,7 +202,7 @@ bot.on('message', msg => {
       response = ["- Kendrick Lamar","- Jamal Rogers",
                   "- Some random beaver", "- Craig and Smokey",
                   "- Florida Evans","- Anthony Fantano",
-                  "- 800lb lady's brother"];
+                  "- 800lb lady's brother", "- Ron Simmons"];
       randomNumber = Math.floor(Math.random()*response.length);
       response = response[randomNumber];
       postMessage(response);
