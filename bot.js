@@ -480,7 +480,7 @@ bot.on('message', msg => {
     randomNumber = Math.floor(Math.random()*15);
     if (randomNumber == 5) {
       console.log("BANG!");
-      reactMessage('😲');
+      reactMessage('🤓');
     } else {
       console.log("*click*...\'" + randomNumber + "\'");
     }
