@@ -374,8 +374,8 @@ bot.on('message', msg => {
         randomNumber = Math.floor(Math.random()*Quotes.length);
         postMessage(Quotes[randomNumber]);
       } else {
-        findQuote = message.content; findQuote = findQuote.replace(/[\!]quote /i,'');
-        botRegex_findQuote = new RegExp("\\b" + findQuote + "\\b","i");
+        findQuote = message.content; findQuote = findQuote.replace(/[\!]quote /i,''); findQuote = findQuote.replace(/\\b /ig,'|');
+        botRegex_findQuote = new RegExp("\\b" + findQuote + "\\b","ig");
         newQuotes = [];
         for(i = 0; i < Quotes.length; i++){                       //If a quote matches the search term, add it to a new list
           if(botRegex_findQuote.test(Quotes[i])){
