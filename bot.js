@@ -375,6 +375,7 @@ bot.on('message', msg => {
         postMessage(Quotes[randomNumber]);
       } else {
         findQuote = message.content; findQuote = findQuote.replace(/[\!]quote /i,''); findQuote = findQuote.replace(/\\b /ig,'|');
+        console.log(`Searching for quotes matching "${findQuote}"...`)
         botRegex_findQuote = new RegExp("\\b" + findQuote + "\\b","ig");
         newQuotes = [];
         for(i = 0; i < Quotes.length; i++){                       //If a quote matches the search term, add it to a new list
