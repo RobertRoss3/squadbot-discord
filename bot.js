@@ -1,24 +1,24 @@
 ///   REQUIRES & SETUP
 /////////////////////////////////////////////////////////////////////////////////////
 require('dotenv').config();
-var HTTPS = require('https');
-var HTTP = require('http');
-const Discord = require('discord.js');
 const bot = new Discord.Client();
-const BOT_TOKEN = process.env.BOT_TOKEN;
-var GoogleSpreadsheet = require('google-spreadsheet');
-var cool = require('cool-ascii-faces');
-var async = require('async');
-const Cleverbot = require('cleverbot');
-const CleverbotFree = require("cleverbot-free");
-var YTsearch = require('youtube-search');
-var Forecast = require('forecast');
-var DOMParser = require('xmldom').DOMParser;
-var wolfClient = require('node-wolfram');
 bot.login(BOT_TOKEN);
 bot.on('ready', () => {
   console.info(`Logged in as ${bot.user.tag}!`);
 });
+const BOT_TOKEN = process.env.BOT_TOKEN;
+const Cleverbot = require('cleverbot');
+const CleverbotFree = require("cleverbot-free");
+const Discord = require('discord.js');
+var async = require('async');
+var cool = require('cool-ascii-faces');
+var DOMParser = require('xmldom').DOMParser;
+var Forecast = require('forecast');
+var GoogleSpreadsheet = require('google-spreadsheet');
+var HTTP = require('http');
+var HTTPS = require('https');
+var wolfClient = require('node-wolfram');
+var YTsearch = require('youtube-search');
 var message;
 var users_mentioned;
 /////////////////////////////////////////////////////////////////////////////////////
@@ -43,7 +43,7 @@ botInfo = "Hi, I'm SquadBot version 3.0.0! \n" +
           "You can see my source code and the rest of the documentation here: https://github.com/RobertRoss3/squadbot-discord";
 
 // All regular expressions or triggers for the bot
-botRegex_oneword = /\s\b/;
+botRegex_oneword = /^\s*[a-zA-Z0-9_@?!.,]+\s*$/;
 // tagRegex_bot = /(@Squadbot|<@!735964834331623505>).*?/i;
 tagRegex_bot = new RegExp(`<\@(|\!) (${SquadBot}|${Bots}) >`, "g");
 /////////////////////////////////////////////////////////////////////////////////////
@@ -76,39 +76,6 @@ async.series([
       } else {console.log("ERROR: SPREADSHEET RETURNED UNDEFINED.")}
     });
   },
-  // //  Gets information about the members
-  // function getMemberInfo(step) {
-  //   Members_info.getCells({'min-row': 2,'max-row': 32,'min-col': 1,'max-col': 3,'return-empty': true},
-  //   function(err, cells) {
-  //     if(cells === undefined){hold(3000);}
-  //     membercount = cells.length/3;
-  //     console.log("Counted "+membercount+" members...");
-  //     Member = []; Member_name = []; Member_id = [];
-  //     for (i = 0; i < membercount; i++){
-  //         Member_name[i] = cells[(i*3)].value;
-  //         Member_id[i] = cells[(i*3)+2].value;
-  //         Member[i] = [Member_id[i], Member_name[i]];
-  //     }
-  //     Member_id.push(SquadBot); Member_name.push('SquadBot'); Member.push([SquadBot,'SquadBot']);
-  //     step();
-  //   });
-  // },
-  // //  Gets information about the channels
-  // function getChannelInfo(step) {
-  //   Channels_info.getCells({'min-row': 2,'max-row': 10,'min-col': 1,'max-col': 2,'return-empty': true},
-  //   function(err, cells) {
-  //     if(cells === undefined){hold(3000);}
-  //     membercount = cells.length/2;
-  //     console.log("Counted "+membercount+" channels...");
-  //     Channel = []; Channel_name = []; Channel_id = [];
-  //     for (i = 0; i < membercount; i++){
-  //         Channel_name[i] = cells[(i*2)].value;
-  //         Channel_id[i] = cells[(i*2)+1].value;
-  //         Channel[i] = [Channel_id[i], Channel_name[i]];
-  //     }
-  //     step();
-  //   });
-  // },
   //  Gets quotes
   function getQuotes(step){
     Quotes_info.getCells({'min-row': 2,'max-row': 300,'min-col': 1,'max-col': 1,'return-empty': false},
@@ -375,7 +342,7 @@ bot.on('message', msg => {
         postMessage(Quotes[randomNumber]);
       } else {
         findQuote = message.content; findQuote = findQuote.replace(/[\!]quote /i,''); findQuote = findQuote.replace(/\b /ig,'|');
-        console.log(`Searching for quotes matching "${findQuote}"...`)
+        console.log(`Searching for quotes matching "${findQuote}"...`);
         botRegex_findQuote = new RegExp("\\b" + findQuote + "\\b","ig");
         newQuotes = [];
         for(i = 0; i < Quotes.length; i++){                       //If a quote matches the search term, add it to a new list
@@ -485,6 +452,23 @@ bot.on('message', msg => {
     } else {
       console.log("*click*...\'" + randomNumber + "\'");
     }
+  }
+  if (message.content && (message.author.id != SquadBot && !message.author.bot)){
+    findQuote = message.content; findQuote = findQuote.match(/\b(\w{5,})\b/g);
+    console.log(findQuote);
+    // console.log(`Searching for quotes matching "${findQuote}"...`);
+    // botRegex_findQuote = new RegExp("\\b" + findQuote + "\\b","ig");
+    // newQuotes = [];
+    // for(i = 0; i < Quotes.length; i++){                       //If a quote matches the search term, add it to a new list
+    //   if(botRegex_findQuote.test(Quotes[i])){
+    //     newQuotes.push(Quotes[i]);
+    //   }
+    // }
+    // if(newQuotes.length > 0) {
+    //   console.log(`Found ${newQuotes.length} matching quotes for "${findQuote}"...`);
+    //   randomNumber2 = Math.floor(Math.random()*newQuotes.length);
+    //   postMessage(newQuotes[randomNumber2].replace(/\\n/g,'\n'));
+    // }
   }
   if((message.author.id != SquadBot && !message.author.bot) && message.content && /#kicksquadbot/i.test(message.content)) {
     response = ["#kickyourself", "Whatever. I'm here forever...",
