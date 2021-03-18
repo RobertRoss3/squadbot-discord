@@ -1,15 +1,11 @@
 ///   REQUIRES & SETUP
 /////////////////////////////////////////////////////////////////////////////////////
 require('dotenv').config();
+const Discord = require('discord.js');
 const bot = new Discord.Client();
-bot.login(BOT_TOKEN);
-bot.on('ready', () => {
-  console.info(`Logged in as ${bot.user.tag}!`);
-});
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const Cleverbot = require('cleverbot');
 const CleverbotFree = require("cleverbot-free");
-const Discord = require('discord.js');
 var async = require('async');
 var cool = require('cool-ascii-faces');
 var DOMParser = require('xmldom').DOMParser;
@@ -19,6 +15,11 @@ var HTTP = require('http');
 var HTTPS = require('https');
 var wolfClient = require('node-wolfram');
 var YTsearch = require('youtube-search');
+
+bot.login(BOT_TOKEN);
+bot.on('ready', () => {
+  console.info(`Logged in as ${bot.user.tag}!`);
+});
 var message;
 var users_mentioned;
 /////////////////////////////////////////////////////////////////////////////////////
@@ -29,7 +30,7 @@ var refresh = (new Date().getTime() / 1000) - 120;
 var SquadBot = process.env.BOT_ID_SQUADBOT;
 var Bots = process.env.BOT_ID_ALL;
 var giphyURL = 'http://i.giphy.com/l1J9EdzfOSgfyueLm.gif';
-noImage = "https://media.giphy.com/media/l1J9EdzfOSgfyueLm/giphy.gif";
+var noImage = "https://media.giphy.com/media/l1J9EdzfOSgfyueLm/giphy.gif";
 var restarting = false;
 
 // time arg is in milliseconds
