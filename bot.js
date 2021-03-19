@@ -484,7 +484,8 @@ bot.on('message', msg => {
             newQuotes.push(Quotes[i]);
           }
         }
-        if (newQuotes.length > 0) {
+        randomNumber = Math.floor(Math.random()*25);
+        if (newQuotes.length > 0 && randomNumber == 0) {
           console.log(`Found ${newQuotes.length} matching quotes for "${findQuote}"...`);
           randomNumber2 = Math.floor(Math.random()*newQuotes.length);
           postMessage(newQuotes[randomNumber2]);
