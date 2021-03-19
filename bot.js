@@ -460,7 +460,7 @@ bot.on('message', msg => {
     findQuote = message.content; findQuote = findQuote.match(/\b(\w{5,})\b/g);    //Pick random words longer than 5 characters
     if (findQuote.length){
       var i = findQuote.length;
-      console.log(findQuote);
+      // console.log(findQuote);
     }
     while (i--) {
       botRegex_findQuote = new RegExp("\\b" + findQuote[i] + "\\b","ig");
@@ -474,22 +474,20 @@ bot.on('message', msg => {
         findQuote.splice(findQuote[i],1);
       }
     }
-    console.log(findQuote);
-    // randomNumber = Math.floor(Math.random()*findQuote.length);
-    // findQuote = findQuote[randomNumber];
-    // console.log(`Searching without reason for quotes matching "${findQuote}"...`);
-    // botRegex_findQuote = new RegExp("\\b" + findQuote + "\\b","ig");
-    // newQuotes = [];
-    // for (i = 0; i < Quotes.length; i++){                       //If a quote matches the search term, add it to a new list
-    //   if (botRegex_findQuote.test(Quotes[i])){
-    //     newQuotes.push(Quotes[i]);
-    //   }
-    // }
-    // if (newQuotes.length > 0) {
-    //   console.log(`Found ${newQuotes.length} matching quotes for "${findQuote}"...`);
-    //   randomNumber2 = Math.floor(Math.random()*newQuotes.length);
-    //   postMessage(newQuotes[randomNumber2].replace(/\\n/g,'\n'));
-    // }
+    // console.log(findQuote);
+    randomNumber = Math.floor(Math.random()*findQuote.length);
+    findQuote = findQuote[randomNumber];
+    console.log(`Searching without reason for quotes matching "${findQuote}"...`);
+    botRegex_findQuote = new RegExp("\\b" + findQuote + "\\b","ig");
+    newQuotes = [];
+    for (i = 0; i < Quotes.length; i++){                       //If a quote matches the search term, add it to a new list
+      if (botRegex_findQuote.test(Quotes[i])){
+        newQuotes.push(Quotes[i]);
+      }
+    }
+    randomNumber2 = Math.floor(Math.random()*newQuotes.length);
+    console.log(newQuotes[randomNumber2].replace(/\\n/g,'\n'));
+    // postMessage(newQuotes[randomNumber2].replace(/\\n/g,'\n'));
   }
   //F: React when someone says "#kicksquadbot"
   if ((message.author.id != SquadBot && !message.author.bot) && message.content && /#kicksquadbot/i.test(message.content)) {
