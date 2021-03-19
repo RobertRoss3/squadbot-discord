@@ -225,7 +225,8 @@ bot.on('message', msg => {
       response2 = ['a cat!','a duck.','something trippy','puppies','a baby'];
       randomNumber2 = Math.floor(Math.random()*topic.length);
       response += response2[randomNumber2];
-      reactMessage('🤯');
+      var reactions = ['🤯','😑','😲','😨']; var randomNumber3 = Math.floor(Math.random()*reactions.length);
+      reactMessage(reactions[randomNumber3]);
       postMessage(response);
       delay(3000);
       searchGiphy(topic[randomNumber2]);
@@ -233,7 +234,7 @@ bot.on('message', msg => {
     }
   }
     // ENTERED A COMMAND?
-  if (message.content.charAt(0) == '!') {
+  if (message.content.charAt(0) == '!' || message.content.charAt(0) == '/') {
     if (/^([\!]giphy)/i.test(message.content)) {
       reactMessage('♥');
       searchGiphy(message.content.substring(7));
@@ -243,7 +244,7 @@ bot.on('message', msg => {
       postMessage(cool());
     }
     else if (/^\!\b(math|calc|wolf)\b/i.test(message.content)) {
-      reactMessage('🧮');
+      reactMessage('🔢');
       Wolfram.query(message.content.substring(6), function(err, result) {
         if (err)
             console.log(err);
@@ -386,7 +387,7 @@ bot.on('message', msg => {
   if ((message.author.id != SquadBot && !message.author.bot) && message.content && /\b(thanks|(thank you)|thx)\b/i.test(message.content)) {
 
     randomNumber2 = randomNumber = Math.floor(Math.random()*10);
-    if (randomNumber2 == 5) {
+    if (randomNumber2 == 0) {
       response = ["You're welcome! 😊", "Don't mention it!",
                   "No problem.", "Any time."];
       randomNumber = Math.floor(Math.random()*response.length);
@@ -399,7 +400,7 @@ bot.on('message', msg => {
   if (message.content && message.author.id == '702731740002648156') {
     // console.log("Pulling trigger...");
     randomNumber = Math.floor(Math.random()*15);
-    if (randomNumber == 5) {
+    if (randomNumber == 0) {
       reactMessage('🤓');
     } else {
       // console.log("*click*...\'" + randomNumber + "\'");
