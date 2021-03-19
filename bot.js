@@ -474,7 +474,7 @@ bot.on('message', msg => {
         findQuote.splice(findQuote[i],1);
       }
     }
-    if(findQuote){
+    if(findQuote.lnegth > 0){
       // console.log(findQuote);
       randomNumber = Math.floor(Math.random()*findQuote.length);
       findQuote = findQuote[randomNumber];
