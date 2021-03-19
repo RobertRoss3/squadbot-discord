@@ -9,7 +9,6 @@ const CleverbotFree = require("cleverbot-free");
 var async = require('async');
 var cool = require('cool-ascii-faces');
 var DOMParser = require('xmldom').DOMParser;
-var Forecast = require('forecast');
 var GoogleSpreadsheet = require('google-spreadsheet');
 var HTTP = require('http');
 var HTTPS = require('https');
@@ -38,7 +37,6 @@ function delay(time) {var d1 = new Date();var d2 = new Date();while (d2.valueOf(
 
 botInfo = "Hi, I'm SquadBot version 3.0.0! \n" +
           "You can use commands like '!giphy [term]' and '!face' to post GIFs and ASCII faces. \n" +
-          "Use !weather [now|today|this week] to get the weather for those times. \n" +
           "Use !math [problem] to solve math problems with WolframAlpha. \n" +
           "I'll respond to certain key words and phrases and you can also @ me to chat. \n" +
           "You can see my source code and the rest of the documentation here: https://github.com/RobertRoss3/squadbot-discord";
@@ -121,7 +119,6 @@ var GiphyapiKey = process.env.GIPHY_API_KEY;
 let clev = new Cleverbot({
   key: process.env.CLEVER_KEY
 });
-var weatherKey = process.env.WEATHER_KEY;
 var mathKey = process.env.MATH_KEY;
     Wolfram = new wolfClient(mathKey);
     console.log("Wolfram okay...")
@@ -130,18 +127,6 @@ var YTsearchopts = {
   maxResults: 10,
   key: YoutubeKey
 };
-
-console.log("Loading weather API...");
-var forecast = new Forecast({
-  service: 'darksky',
-  key: weatherKey,
-  units: 'fahrenheit',
-  cache: true,      // Cache API requests
-  ttl: {            // How long to cache requests. Uses syntax from moment.js: http://momentjs.com/docs/#/durations/creating/
-    minutes: 27,
-    seconds: 45
-  }
-});
 
 /////////////////////////////////////////////////////////////////////////////////////
 
@@ -166,7 +151,7 @@ bot.on('message', msg => {
 
   if (message.content && !botRegex_oneword.test(message.content)) {
     if (/damn\b/gi.test(message.content)) {
-      reactMessage('❤');
+      reactMessage('♥');
       response = ["- Kendrick Lamar","- Jamal Rogers",
                   "- Some random beaver", "- Craig and Smokey",
                   "- Florida Evans","- Anthony Fantano",
@@ -250,7 +235,7 @@ bot.on('message', msg => {
     // ENTERED A COMMAND?
   if (message.content.charAt(0) == '!') {
     if (/^([\!]giphy)/i.test(message.content)) {
-      reactMessage('❤');
+      reactMessage('♥');
       searchGiphy(message.content.substring(7));
     }
     else if (/^[\!]face$/i.test(message.content)){
@@ -294,40 +279,6 @@ bot.on('message', msg => {
           }
         }
     });}
-    else if (/\bweather\b/i.test(message.content)) {
-      Regexnow = /\b(now|current)\b/i; Regextoday = /\b(today|day)\b/i;
-      Regexweek = /\b(this week)|(for the week)|(week)\b/i;
-      // Retrieve weather information from Statesboro
-      // Initialize
-      reactMessage('🌧');
-      console.log("Getting current weather...");
-      var forecast = new Forecast({
-        service: 'darksky',
-        key: weatherKey,
-        units: 'fahrenheit',
-        cache: true,      // Cache API requests
-        ttl: {            // How long to cache requests. Uses syntax from moment.js: http://momentjs.com/docs/#/durations/creating/
-          minutes: 27,
-          seconds: 45
-        }
-      });
-      forecast.get([32.4128, -81.7957], function(err, weather) {
-        if (err) return console.log(err);
-
-      if (Regexnow.test(message.content)) {
-        postMessage("Current weather is " + weather.currently.summary.toLowerCase() +
-                    " with a temperature of " + weather.currently.temperature + "°F.");
-      } else if (Regexweek.test(message.content)) {
-        // console.log(weather.daily);
-        postMessage("Weather this week is " + weather.daily.summary);
-      } else {
-        // console.log(weather.hourly);
-        hourlySummary = weather.hourly.summary.toLowerCase();
-        hourlySummary = hourlySummary.substring(0,hourlySummary.length-1);
-        postMessage("Weather today is " + hourlySummary +
-                    " with an average temperature of " + weather.hourly.data[0].temperature + "°F.");
-      }
-    });}
     if (message.content == "!info") {
       reactMessage('ℹ');
       postMessage(botInfo);
@@ -337,7 +288,7 @@ bot.on('message', msg => {
     }
     else if (/^([\!]quote)/i.test(message.content)) {
       if (!Quotes_info){hold(5000);if (!quotecount){hold(2000);}}
-      reactMessage('📝');
+      // reactMessage('📝');
       if (!botRegex_oneword.test(message.content)) {                  //If it's just "/quote"
         randomNumber = Math.floor(Math.random()*Quotes.length);
         postMessage(Quotes[randomNumber]);
@@ -414,7 +365,7 @@ bot.on('message', msg => {
   }
   // Someone tried to use the old tagging system
   if (/\@(all|GSU)/ig.test(message.content)) {
-    reactMessage('❤');
+    reactMessage('♥');
     postMessage("I don't do that anymore, try using one of the Discord tags (@everyone)");
   }
   if ((message.author.id != SquadBot && !message.author.bot ) && message.content && /(\b(eat|eating|eats|ate) ass\b)(.*?)/i.test(message.content)) {
@@ -439,20 +390,19 @@ bot.on('message', msg => {
       response = ["You're welcome! 😊", "Don't mention it!",
                   "No problem.", "Any time."];
       randomNumber = Math.floor(Math.random()*response.length);
-      reactMessage('❤');
+      reactMessage('♥');
       postMessage(response[randomNumber]);
     }
 
   }
   //F: Whenever @TheD posts, random chance to react
   if (message.content && message.author.id == '702731740002648156') {
-    console.log("Pulling trigger...");
+    // console.log("Pulling trigger...");
     randomNumber = Math.floor(Math.random()*15);
     if (randomNumber == 5) {
-      console.log("BANG!");
       reactMessage('🤓');
     } else {
-      console.log("*click*...\'" + randomNumber + "\'");
+      // console.log("*click*...\'" + randomNumber + "\'");
     }
   }
   //F: Random chance SquadBot will say a quote using a word from someone's comment
@@ -476,7 +426,6 @@ bot.on('message', msg => {
         // console.log(findQuote);
         randomNumber = Math.floor(Math.random()*findQuote.length);
         findQuote = findQuote[randomNumber];
-        console.log(`Searching without reason for quotes matching "${findQuote}"...`);
         botRegex_findQuote = new RegExp("\\b" + findQuote + "\\b","ig");
         newQuotes = [];
         for (i = 0; i < Quotes.length; i++){                       //If a quote matches the search term, add it to a new list
@@ -486,7 +435,7 @@ bot.on('message', msg => {
         }
         randomNumber = Math.floor(Math.random()*25);
         if (newQuotes.length > 0 && randomNumber == 0) {
-          console.log(`Found ${newQuotes.length} matching quotes for "${findQuote}"...`);
+          console.log(`Quoting without reason "${findQuote}"...`);
           randomNumber2 = Math.floor(Math.random()*newQuotes.length);
           postMessage(newQuotes[randomNumber2]);
         }
@@ -507,7 +456,7 @@ bot.on('message', msg => {
       response = ["Hello!", "What\'s up?", "Hey.", "Hi!", "How are you on this fine day?", "😜", "Yo.","giphy hi","giphy hello"];
       randomNumber = Math.floor(Math.random()*response.length);
       response = response[randomNumber];
-      reactMessage('❤');
+      reactMessage('♥');
       if (/giphy/i.test(response)){
         response = response.replace(/giphy/i, '');
         searchGiphy(response);
