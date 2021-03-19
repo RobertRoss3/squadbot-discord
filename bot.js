@@ -458,13 +458,16 @@ bot.on('message', msg => {
   //F: Random chance SquadBot will say a quote using a word from someone's comment
   if (message.content && (message.author.id != SquadBot && !message.author.bot)){
     findQuote = message.content; findQuote = findQuote.match(/\b(\w{5,})\b/g);    //Pick random words longer than 5 characters
-    var i = findQuote.length;
+    if (findQuote.length){
+      var i = findQuote.length;
+      console.log(findQuote);
+    }
     while (i--) {
       botRegex_findQuote = new RegExp("\\b" + findQuote[i] + "\\b","ig");
       newQuotes = [];
-      for (i = 0; i < Quotes.length; i++){                        //If a quote matches the search term, add it to a new list
-        if (botRegex_findQuote.test(Quotes[i])){
-          newQuotes.push(Quotes[i]);
+      for (j = 0; j < Quotes.length; j++){                        //If a quote matches the search term, add it to a new list
+        if (botRegex_findQuote.test(Quotes[j])){
+          newQuotes.push(Quotes[j]);
         }
       }
       if(newQuotes.length == 0){
