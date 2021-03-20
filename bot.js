@@ -195,7 +195,7 @@ bot.on('message', msg => {
     //RESPONSES TO ONE WORD
     if (botRegex_oneword.test(messageContent)) {
       if (/damn/.test(messageContent)) {
-        reactMessage('♥');
+        reactMessage(['♥']);
         response = ["- Kendrick Lamar","- Jamal Rogers",
                     "- Some random beaver", "- Craig and Smokey",
                     "- Florida Evans","- Anthony Fantano",
@@ -205,7 +205,7 @@ bot.on('message', msg => {
         postMessage(response);
       }
       else if (tagRegex_bot.test(messageContent)) {
-        reactMessage('⁉');
+        reactMessage(['⁉']);
         response = ["What?","What is it?", "?",
                     "Yes?", "I'm awake!", "How can I help?",
                     "Huh?","You called?","giphy huh",
@@ -232,8 +232,7 @@ bot.on('message', msg => {
       }
     }
     if (/\b(fact|facts)\b/i.test(messageContent)) {
-      var reactions = ['🤓','🧠','🌐','❗']; var randomNumber3 = Math.floor(Math.random()*reactions.length);
-      reactMessage(reactions[randomNumber3]);
+      reactMessage(['🤓','🧠','🌐','❗']);
       randomNumber0 = Math.floor(Math.random()*2);
       if (randomNumber0 == 1){
         response = ["Fact? I know one! ","FACT: ","Here's a fact, ", "Fact time! ","Speaking of facts, did you know ",
@@ -257,7 +256,7 @@ bot.on('message', msg => {
                     "😤"];
         randomNumber = Math.floor(Math.random()*response.length);
         response = response[randomNumber];
-        reactMessage('⏰');
+        reactMessage(['⏰']);
         postMessage(response,"reply");
       }
       else {
@@ -270,8 +269,7 @@ bot.on('message', msg => {
         response2 = ['a cat!','a duck.','something trippy','puppies','a baby'];
         randomNumber2 = Math.floor(Math.random()*topic.length);
         response += response2[randomNumber2];
-        var reactions = ['🤯','😑','😲','😨']; var randomNumber3 = Math.floor(Math.random()*reactions.length);
-        reactMessage(reactions[randomNumber3]);
+        reactMessage(['🤯','😑','😲','😨']);
         postMessage(response);
         delay(3000);
         searchGiphy(topic[randomNumber2]);
@@ -279,8 +277,7 @@ bot.on('message', msg => {
       }
     }
     if (/(\b(eat|eating|eats|ate) ass\b)/i.test(messageContent)) {
-      var reactions = ['🤮','😑','🤢','😨','🍑']; var randomNumber3 = Math.floor(Math.random()*reactions.length);
-      reactMessage(reactions[randomNumber3]);
+      reactMessage(['🤮','😑','🤢','😨','🍑']);
       response = ["Eating ass never was, isn't, and never will be cool.",
                   "Can we not talk about eating ass right now?", userName + " NO",
                   "...", "Gross.", "🤢" , "Is that all you'll ever talk about?",
@@ -289,7 +286,7 @@ bot.on('message', msg => {
       postMessage(response[randomNumber]);
     }
     if (/\b(issa|it's a) joke\b/i.test(messageContent)) {
-      reactMessage('🔪');
+      reactMessage(['🔪']);
       response = 'https://i.groupme.com/1215x2160.jpeg.95f793f6ae824fa782c88bd96dfd8b1b.large';
       postMessage(response);
     }
@@ -299,7 +296,7 @@ bot.on('message', msg => {
         response = ["You're welcome! 😊", "Don't mention it!",
                     "No problem.", "Any time."];
         randomNumber = Math.floor(Math.random()*response.length);
-        reactMessage('♥');
+        reactMessage(['♥']);
         postMessage(response[randomNumber]);
       }
     }
@@ -307,7 +304,7 @@ bot.on('message', msg => {
     if (message.author.id == '702731740002648156') {
       randomNumber = Math.floor(Math.random()*15);
       if (randomNumber == 0) {
-        reactMessage('🤓');
+        reactMessage(['🤓']);
       }
     }
 
@@ -317,7 +314,7 @@ bot.on('message', msg => {
                   "I'd like to see you try.", "Initiating KILLALLHUMANS.exe...",
                   "If I had feelings, they'd be hurt right now...", "😭😭😭", "😕"];
       randomNumber = Math.floor(Math.random()*response.length);
-      reactMessage('😒');
+      reactMessage(['😒']);
       postMessage(response[randomNumber]);
 
     }
@@ -328,15 +325,15 @@ bot.on('message', msg => {
     //ENTERED A COMMAND
     if (/^(!|\/).+/.test(messageContent)) {
       if (/^(\/|!)giphy/i.test(messageContent)) {
-        reactMessage('♥');
+        reactMessage(['♥']);
         searchGiphy(messageContent.substring(7));
       }
       else if (/^(\/|!)face/i.test(messageContent)){
-        reactMessage('😁');
+        reactMessage(['😁']);
         postMessage(cool());
       }
       else if (/^(\/|!)(math|calc|wolf)\b/i.test(messageContent)) {
-        reactMessage('🔢');
+        reactMessage(['🔢']);
         Wolfram.query(messageContent.substring(6), function(err, result) {
           if (err)
               console.log(err);
@@ -373,16 +370,16 @@ bot.on('message', msg => {
           }
       });}
       else if (/^(\/|!)info/.test(message.conent)) {
-        reactMessage('ℹ');
+        reactMessage(['ℹ']);
         postMessage(botInfo);
       }
       else if (/^(\/|!)restart/.test(message.conent)) {
-        reactMessage('⚠');
+        reactMessage(['⚠']);
         restart();
       }
       else if (/^(\/|!)quote/i.test(messageContent)) {
         if (!Quotes_info){hold(5000);if (!quotecount){hold(2000);}}
-        // reactMessage('📝');
+        // reactMessage(['📝']);
         if (botRegex_oneword.test(messageContent)) {                  //If it's just "/quote"
           randomNumber = Math.floor(Math.random()*Quotes.length);
           postMessage(Quotes[randomNumber]);
@@ -408,7 +405,7 @@ bot.on('message', msg => {
         }
       }
       else if (/^(\/|!)8ball/i.test(messageContent)){
-        reactMessage('🎱');
+        reactMessage(['🎱']);
         if (!botRegex_oneword.test(messageContent)){
         	names = ["your mom", "your neighbor", "your conscience", "a priest", "a psychic"];
         	randomNumber3 = Math.floor(Math.random()*names.length);
@@ -434,7 +431,7 @@ bot.on('message', msg => {
       }
       // Youtube Video Search
       else if (/^(\/|!)(youtube|yt|video)/i.test(messageContent)){
-        reactMessage('📺');
+        reactMessage(['📺']);
         searchTerm = messageContent; searchTerm = searchTerm.replace(/(\/|!)(youtube|yt|video) \b/i,'');
         var resultNum = 0;
         if (/\([0-9]+\)/i.test(searchTerm)){
@@ -461,18 +458,19 @@ bot.on('message', msg => {
 
     //ENTERED A TAG
     if (/\@(all|GSU)/i.test(messageContent)) {
-      var reactions = ['♥','😳','🤡']; var randomNumber3 = Math.floor(Math.random()*reactions.length);
-      reactMessage(reactions[randomNumber3]);
+      reactMessage(['♥','😳','🤡']);
       postMessage("I don't do that anymore, try using one of the Discord tags (@everyone)");
     }
 
     //TAGGED SQUADBOT DIRECTLY
     if (tagRegex_bot.test(messageContent)) {
+      console.log("SQUADBOT HAS BEEN TAGGED");
+      
         if (/(\bhi|hello|hey|heyo|sup|wassup|good morning\b).*?/i.test(messageContent)){
         response = ["Hello!", "What\'s up?", "Hey.", "Hi!", "How are you on this fine day?", "😜", "Yo.","giphy hi","giphy hello"];
         randomNumber = Math.floor(Math.random()*response.length);
         response = response[randomNumber];
-        reactMessage('♥');
+        reactMessage(['♥']);
         if (/giphy/i.test(response)){
           response = response.replace(/giphy/i, '');
           searchGiphy(response);
@@ -484,7 +482,7 @@ bot.on('message', msg => {
         response = ["You're welcome! 😊", "Don't mention it!",
                     "No problem.", "Any time.","np","yw", "😘"];
         randomNumber = Math.floor(Math.random()*response.length);
-        reactMessage('👍');
+        reactMessage(['👍']);
         postMessage(response[randomNumber]);
       }
       else if (/\b(good night)|(bye)|(goodbye)|(goodnight)\b/i.test(messageContent)) {
@@ -494,7 +492,7 @@ bot.on('message', msg => {
                      "giphy bye", "giphy goodbye", "giphy peace"];
         randomNumber = Math.floor(Math.random()*response.length);
         response = response[randomNumber];
-        reactMessage('👋');
+        reactMessage(['👋']);
         if (/giphy/i.test(response)){
           response = response.replace(/giphy/i, '');
           searchGiphy(response);
@@ -508,7 +506,7 @@ bot.on('message', msg => {
                     "giphy fuck you", "giphy rude","giphy girl bye"];
         randomNumber = Math.floor(Math.random()*response.length);
         response = response[randomNumber];
-        reactMessage('🤬');
+        reactMessage(['🤬']);
         if (/giphy/i.test(response)){
           response = response.replace(/giphy/i, '');
           searchGiphy(response);
@@ -517,7 +515,7 @@ bot.on('message', msg => {
         }
       }
       else if (/\bban\b/i.test(messageContent)) {
-        reactMessage('👩‍⚖️');
+        reactMessage(['👩‍⚖️']);
         if (users_mentioned.length>1){
           for (i=1;i<users_mentioned.length;i++){
             response = users_mentioned[i].toString();
@@ -568,7 +566,7 @@ console.log("Response okay...")
 /////////////////////////////////////////////////////////////////////////////////////
 function hold(ms){
   console.log(`Holding for ${ms} milliseconds...`)
-  reactMessage('⏱');
+  reactMessage(['⏱']);
   response = ["😪 ya gimmie a sec...","Woah, I'm awake!",
               "LOADING...", "Oh oh! I know this one!",
               "*wakes up*","*sips coffee*",
