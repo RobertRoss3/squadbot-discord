@@ -465,7 +465,7 @@ bot.on('message', msg => {
     //TAGGED SQUADBOT DIRECTLY
     if (tagRegex_bot.test(messageContent)) {
       console.log("SQUADBOT HAS BEEN TAGGED");
-      
+
         if (/(\bhi|hello|hey|heyo|sup|wassup|good morning\b).*?/i.test(messageContent)){
         response = ["Hello!", "What\'s up?", "Hey.", "Hi!", "How are you on this fine day?", "😜", "Yo.","giphy hi","giphy hello"];
         randomNumber = Math.floor(Math.random()*response.length);
@@ -687,7 +687,7 @@ function reactMessage(reaction) {
     var i = Math.floor(Math.random()*reaction.length);
     reaction = reaction[i];
   }
-  message.react(reaction)
+  message.react(reaction[0])
     .catch(console.error);
   console.log(`Reacted: ${reaction}`);
 };
