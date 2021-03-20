@@ -42,7 +42,7 @@ botInfo = "Hi, I'm SquadBot version 3.0.0! \n" +
           "You can see my source code and the rest of the documentation here: https://github.com/RobertRoss3/squadbot-discord";
 
 // All regular expressions or triggers for the bot
-botRegex_oneword = /^\s*[a-zA-Z0-9_@?!.,]+\s*$/;
+botRegex_oneword = /^\s*[a-zA-Z0-9_@?!.,<>]+\s*$/;
 // tagRegex_bot = /(@Squadbot|<@!735964834331623505>).*?/i;
 tagRegex_bot = new RegExp("<(@!|@)(" + SquadBot + "|" + Bots + ")>", "g");
 /////////////////////////////////////////////////////////////////////////////////////
