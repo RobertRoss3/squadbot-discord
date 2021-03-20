@@ -189,6 +189,24 @@ bot.on('message', msg => {
       }
     }
 
+    //F: Random chance CleverBot will respond to someone's message
+    if(Math.floor(Math.random()*100) == 0){
+      cleverQuestion = messageContent;
+      cleverQuestion = cleverQuestion.replace(tagRegex_bot,'');
+      cleverQuestion = cleverQuestion.replace(/^\s/gm,'');
+      if (cleverQuestion) {
+        console.log(`Contacting without reason Cleverbot AI server with: "${cleverQuestion}"`);
+        // clev.query()
+        // .then(function (response){
+        //   cleverResponse = response.output;
+        //   console.log("Cleverbot responded: " + cleverResponse);
+        //   postMessage(cleverResponse,'reply');
+        // });
+        CleverbotFree(cleverQuestion)
+        .then(response => postMessage(response));
+      }
+    }
+
     ////START OF MAIN PASSIVE FUNCTIONS
     ///These functions run if the user messages a trigger without directly invoking the bot
 
@@ -464,9 +482,7 @@ bot.on('message', msg => {
 
     //TAGGED SQUADBOT DIRECTLY
     if (tagRegex_bot.test(messageContent)) {
-      console.log("SQUADBOT HAS BEEN TAGGED");
-
-        if (/(\bhi|hello|hey|heyo|sup|wassup|good morning\b).*?/i.test(messageContent)){
+        if (/\b(hi|hello|hey|heyo|sup|wassup|good morning)\b/i.test(messageContent)){
         response = ["Hello!", "What\'s up?", "Hey.", "Hi!", "How are you on this fine day?", "😜", "Yo.","giphy hi","giphy hello"];
         randomNumber = Math.floor(Math.random()*response.length);
         response = response[randomNumber];
