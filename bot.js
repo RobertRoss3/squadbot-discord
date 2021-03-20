@@ -147,8 +147,6 @@ bot.on('message', msg => {
   }
   console.log(message.content);
 
-  var askme = new Boolean(false);
-
   if (message.content && message.author.id != SquadBot) {
     ////START OF COMPULSORY FUNCTIONS
     ///These functions run regardless of message content
@@ -211,7 +209,7 @@ bot.on('message', msg => {
                     "Huh?","You called?","giphy huh",
                     "giphy question mark", "giphy what?"];
         randomNumber = Math.floor(Math.random()*response.length);
-        askme = true; response = response[randomNumber];
+        response = response[randomNumber];
         if (/\bgiphy \b/i.test(response)){
           response.replace(/\bgiphy \b/i, '');
           searchGiphy(response);
@@ -384,7 +382,7 @@ bot.on('message', msg => {
       else if (/^(\/|!)quote/i.test(message.content)) {
         if (!Quotes_info){hold(5000);if (!quotecount){hold(2000);}}
         // reactMessage('📝');
-        if (!botRegex_oneword.test(message.content)) {                  //If it's just "/quote"
+        if (botRegex_oneword.test(message.content)) {                  //If it's just "/quote"
           randomNumber = Math.floor(Math.random()*Quotes.length);
           postMessage(Quotes[randomNumber]);
         } else {
@@ -410,7 +408,7 @@ bot.on('message', msg => {
       }
       else if (/^(\/|!)8ball/i.test(message.content)){
         reactMessage('🎱');
-        if (botRegex_oneword.test(message.content)){
+        if (!botRegex_oneword.test(message.content)){
         	names = ["your mom", "your neighbor", "your conscience", "a priest", "a psychic"];
         	randomNumber3 = Math.floor(Math.random()*names.length);
 
@@ -538,7 +536,7 @@ bot.on('message', msg => {
           postMessage("You have tag them too, not just me.");
         }
       }
-      else if (!askme) {
+      else if (!botRegex_oneword) {
         cleverQuestion = message.content;
         cleverQuestion = cleverQuestion.replace(tagRegex_bot,'');
         cleverQuestion = cleverQuestion.replace(/^\s/gm,'');
