@@ -190,7 +190,7 @@ bot.on('message', msg => {
     }
 
     //F: Random chance CleverBot will respond to someone's message
-    if(Math.floor(Math.random()*100) == 0){
+    if(Math.floor(Math.random()*50) == 0){
       cleverQuestion = messageContent;
       cleverQuestion = cleverQuestion.replace(tagRegex_bot,'');
       cleverQuestion = cleverQuestion.replace(/^\s/gm,'');
@@ -481,7 +481,7 @@ bot.on('message', msg => {
     }
 
     //TAGGED SQUADBOT DIRECTLY
-    if (tagRegex_bot.test(messageContent)) {
+    if (tagRegex_bot.test(messageContent) || users_mentioned == "<@" + SquadBot + ">") {
         if (/\b(hi|hello|hey|heyo|sup|wassup|good morning)\b/i.test(messageContent)){
         response = ["Hello!", "What\'s up?", "Hey.", "Hi!", "How are you on this fine day?", "😜", "Yo.","giphy hi","giphy hello"];
         randomNumber = Math.floor(Math.random()*response.length);
