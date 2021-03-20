@@ -537,7 +537,7 @@ bot.on('message', msg => {
           postMessage("You have tag them too, not just me.");
         }
       }
-      else if (!botRegex_oneword) {
+      else if (!botRegex_oneword.test(messageContent)) {
         cleverQuestion = messageContent;
         cleverQuestion = cleverQuestion.replace(tagRegex_bot,'');
         cleverQuestion = cleverQuestion.replace(/^\s/gm,'');
