@@ -154,39 +154,37 @@ bot.on('message', msg => {
     ///These functions run regardless of message content
 
     //F: Random chance SquadBot will say a quote using a word from someone's comment
-    if (message.content && (message.author.id != SquadBot && !message.author.bot)){
-      findQuote = message.content; findQuote = findQuote.match(/\b(\w{5,})\b/g);    //Pick random words longer than 5 characters
-      if (findQuote){
-        var i = findQuote.length;
-        while (i--) {
-          botRegex_findQuote = new RegExp("\\b" + findQuote[i] + "\\b","ig");
-          newQuotes = [];
-          for (j = 0; j < Quotes.length; j++){                        //If a quote matches the search term, add it to a new list
-            if (botRegex_findQuote.test(Quotes[j])){
-              newQuotes.push(Quotes[j]);
-            }
-          }
-          if(newQuotes.length == 0){
-            findQuote.splice(findQuote[i],1);
+    findQuote = message.content; findQuote = findQuote.match(/\b(\w{5,})\b/g);    //Pick random words longer than 5 characters
+    if (findQuote){
+      var i = findQuote.length;
+      while (i--) {
+        botRegex_findQuote = new RegExp("\\b" + findQuote[i] + "\\b","ig");
+        newQuotes = [];
+        for (j = 0; j < Quotes.length; j++){                        //If a quote matches the search term, add it to a new list
+          if (botRegex_findQuote.test(Quotes[j])){
+            newQuotes.push(Quotes[j]);
           }
         }
-        if(findQuote.length > 0){
-          // console.log(findQuote);
-          randomNumber = Math.floor(Math.random()*findQuote.length);
-          findQuote = findQuote[randomNumber];
-          botRegex_findQuote = new RegExp("\\b" + findQuote + "\\b","ig");
-          newQuotes = [];
-          for (i = 0; i < Quotes.length; i++){                       //If a quote matches the search term, add it to a new list
-            if (botRegex_findQuote.test(Quotes[i])){
-              newQuotes.push(Quotes[i]);
-            }
+        if(newQuotes.length == 0){
+          findQuote.splice(findQuote[i],1);
+        }
+      }
+      if(findQuote.length > 0){
+        // console.log(findQuote);
+        randomNumber = Math.floor(Math.random()*findQuote.length);
+        findQuote = findQuote[randomNumber];
+        botRegex_findQuote = new RegExp("\\b" + findQuote + "\\b","ig");
+        newQuotes = [];
+        for (i = 0; i < Quotes.length; i++){                       //If a quote matches the search term, add it to a new list
+          if (botRegex_findQuote.test(Quotes[i])){
+            newQuotes.push(Quotes[i]);
           }
-          randomNumber = Math.floor(Math.random()*25);
-          if (newQuotes.length > 0 && randomNumber == 0) {
-            console.log(`Quoting without reason "${findQuote}"...`);
-            randomNumber2 = Math.floor(Math.random()*newQuotes.length);
-            postMessage(newQuotes[randomNumber2]);
-          }
+        }
+        randomNumber = Math.floor(Math.random()*25);
+        if (newQuotes.length > 0 && randomNumber == 0) {
+          console.log(`Quoting without reason "${findQuote}"...`);
+          randomNumber2 = Math.floor(Math.random()*newQuotes.length);
+          postMessage(newQuotes[randomNumber2]);
         }
       }
     }
@@ -195,7 +193,7 @@ bot.on('message', msg => {
     ///These functions run if the user messages a trigger without directly invoking the bot
 
     //RESPONSES TO ONE WORD
-    if (!botRegex_oneword.test(message.content)) {
+    if (botRegex_oneword.test(message.content)) {
       if (/damn/.test(message.content)) {
         reactMessage('♥');
         response = ["- Kendrick Lamar","- Jamal Rogers",
