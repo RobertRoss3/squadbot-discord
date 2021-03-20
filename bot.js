@@ -685,13 +685,13 @@ function postMessage(botResponse,type,args) {
 };
 
 function reactMessage(reaction) {
-  if (reaction.lenth > 1){
-    var randomNumber3 = Math.floor(Math.random()*reaction.length);
-    reaction = reaction[randomNumber3];
+  if (reaction.length > 1){
+    var i = Math.floor(Math.random()*reaction.length);
+    reaction = reaction[i];
   }
   message.react(reaction)
     .catch(console.error);
-  console.log(`"Reacted: ${reaction}`);
+  console.log(`Reacted: ${reaction}`);
 };
 
 function restart(){
