@@ -136,23 +136,25 @@ bot.on('message', msg => {
   message = msg;
   userName = message.author.username; userIDNum = message.author.id;
   channel = message.channel.name; channelID = message.channel.id;
+  messageContent = message.content;
   //Most likely a DM
   if (!channel){
     channel = 'direct-message';
   }
-  console.log(`${userName} (${userIDNum}) posted in #${channel} (${channelID}):`);
+  // console.log(`${userName} (${userIDNum}) posted in #${channel} (${channelID}):`);
+  console.log(`${userName} posted in #${channel}:`);
   if (message.mentions.users.size) {
     users_mentioned = message.mentions.users.array();
     console.log(`and mentioned: ${users_mentioned}`);
   }
-  console.log(message.content);
+  console.log(messageContent);
 
-  if (message.content && message.author.id != SquadBot) {
+  if (messageContent && userIDNum != SquadBot) {
     ////START OF COMPULSORY FUNCTIONS
     ///These functions run regardless of message content
 
     //F: Random chance SquadBot will say a quote using a word from someone's comment
-    findQuote = message.content; findQuote = findQuote.match(/\b(\w{5,})\b/g);    //Pick random words longer than 5 characters
+    findQuote = messageContent.match(/\b(\w{5,})\b/g);    //Pick random words longer than 5 characters
     if (findQuote){
       var i = findQuote.length;
       while (i--) {
@@ -191,8 +193,8 @@ bot.on('message', msg => {
     ///These functions run if the user messages a trigger without directly invoking the bot
 
     //RESPONSES TO ONE WORD
-    if (botRegex_oneword.test(message.content)) {
-      if (/damn/.test(message.content)) {
+    if (botRegex_oneword.test(messageContent)) {
+      if (/damn/.test(messageContent)) {
         reactMessage('♥');
         response = ["- Kendrick Lamar","- Jamal Rogers",
                     "- Some random beaver", "- Craig and Smokey",
@@ -202,7 +204,7 @@ bot.on('message', msg => {
         response = response[randomNumber];
         postMessage(response);
       }
-      else if (tagRegex_bot.test(message.content)) {
+      else if (tagRegex_bot.test(messageContent)) {
         reactMessage('⁉');
         response = ["What?","What is it?", "?",
                     "Yes?", "I'm awake!", "How can I help?",
@@ -216,21 +218,20 @@ bot.on('message', msg => {
         } else {
         postMessage(response);}
       }
-      else if(/tick/.test(message.content)){
+      else if(/tick/.test(messageContent)){
         postMessage("tock");
-        var reactions = ['♥','⏰','🕰','⏲']; var randomNumber3 = Math.floor(Math.random()*reactions.length);
-        reactMessage(reactions[randomNumber3]);
+        reactMessage(['♥','⏰','🕰','⏲']);
       }
     }
 
     //OTHER RESPONSES
-    if (/\b(wtf|wth|what the (hell|fuck))\b/i.test(message.content)) {
+    if (/\b(wtf|wth|what the (hell|fuck))\b/i.test(messageContent)) {
       randomNumber = Math.floor(Math.random()*5);
       if (randomNumber == 0) {
         postMessage("I know, right!?");
       }
     }
-    if (/\b(fact|facts)\b/i.test(message.content)) {
+    if (/\b(fact|facts)\b/i.test(messageContent)) {
       var reactions = ['🤓','🧠','🌐','❗']; var randomNumber3 = Math.floor(Math.random()*reactions.length);
       reactMessage(reactions[randomNumber3]);
       randomNumber0 = Math.floor(Math.random()*2);
@@ -244,7 +245,7 @@ bot.on('message', msg => {
         postMessage(response);
       }
     }
-    if (/^(BULLSHIT|SPOILER) ALERT/i.test(message.content)){
+    if (/^(BULLSHIT|SPOILER) ALERT/i.test(messageContent)){
       var newtime = new Date().getTime() / 1000;
       if (newtime < refresh + 10) {
         response = ["You\'re doing that too much...",
@@ -277,7 +278,7 @@ bot.on('message', msg => {
         refresh = newtime;
       }
     }
-    if (/(\b(eat|eating|eats|ate) ass\b)/i.test(message.content)) {
+    if (/(\b(eat|eating|eats|ate) ass\b)/i.test(messageContent)) {
       var reactions = ['🤮','😑','🤢','😨','🍑']; var randomNumber3 = Math.floor(Math.random()*reactions.length);
       reactMessage(reactions[randomNumber3]);
       response = ["Eating ass never was, isn't, and never will be cool.",
@@ -287,12 +288,12 @@ bot.on('message', msg => {
       randomNumber = Math.floor(Math.random()*response.length);
       postMessage(response[randomNumber]);
     }
-    if (/\b(issa|it's a) joke\b/i.test(message.content)) {
+    if (/\b(issa|it's a) joke\b/i.test(messageContent)) {
       reactMessage('🔪');
       response = 'https://i.groupme.com/1215x2160.jpeg.95f793f6ae824fa782c88bd96dfd8b1b.large';
       postMessage(response);
     }
-    if (/\b(thanks|(thank you)|thx)\b/i.test(message.content)) {
+    if (/\b(thanks|(thank you)|thx)\b/i.test(messageContent)) {
       randomNumber2 = randomNumber = Math.floor(Math.random()*10);
       if (randomNumber2 == 0) {
         response = ["You're welcome! 😊", "Don't mention it!",
@@ -311,7 +312,7 @@ bot.on('message', msg => {
     }
 
     //F: React when someone says "#kicksquadbot"
-    if ((message.author.id != SquadBot) && message.content && /#kicksquadbot/i.test(message.content)) {
+    if ((message.author.id != SquadBot) && messageContent && /#kicksquadbot/i.test(messageContent)) {
       response = ["#kickyourself", "Whatever. I'm here forever...",
                   "I'd like to see you try.", "Initiating KILLALLHUMANS.exe...",
                   "If I had feelings, they'd be hurt right now...", "😭😭😭", "😕"];
@@ -325,18 +326,18 @@ bot.on('message', msg => {
     ///These functions run when users message the bot directly using tags or commands
 
     //ENTERED A COMMAND
-    if (/^(!|\/).+/.test(message.content)) {
-      if (/^(\/|!)giphy/i.test(message.content)) {
+    if (/^(!|\/).+/.test(messageContent)) {
+      if (/^(\/|!)giphy/i.test(messageContent)) {
         reactMessage('♥');
-        searchGiphy(message.content.substring(7));
+        searchGiphy(messageContent.substring(7));
       }
-      else if (/^(\/|!)face/i.test(message.content)){
+      else if (/^(\/|!)face/i.test(messageContent)){
         reactMessage('😁');
         postMessage(cool());
       }
-      else if (/^(\/|!)(math|calc|wolf)\b/i.test(message.content)) {
+      else if (/^(\/|!)(math|calc|wolf)\b/i.test(messageContent)) {
         reactMessage('🔢');
-        Wolfram.query(message.content.substring(6), function(err, result) {
+        Wolfram.query(messageContent.substring(6), function(err, result) {
           if (err)
               console.log(err);
           else {
@@ -379,14 +380,14 @@ bot.on('message', msg => {
         reactMessage('⚠');
         restart();
       }
-      else if (/^(\/|!)quote/i.test(message.content)) {
+      else if (/^(\/|!)quote/i.test(messageContent)) {
         if (!Quotes_info){hold(5000);if (!quotecount){hold(2000);}}
         // reactMessage('📝');
-        if (botRegex_oneword.test(message.content)) {                  //If it's just "/quote"
+        if (botRegex_oneword.test(messageContent)) {                  //If it's just "/quote"
           randomNumber = Math.floor(Math.random()*Quotes.length);
           postMessage(Quotes[randomNumber]);
         } else {
-          findQuote = message.content; findQuote = findQuote.replace(/[\!]quote /i,''); findQuote = findQuote.replace(/\b /ig,'|');
+          findQuote = messageContent; findQuote = findQuote.replace(/[\!]quote /i,''); findQuote = findQuote.replace(/\b /ig,'|');
           console.log(`Searching for quotes matching "${findQuote}"...`);
           botRegex_findQuote = new RegExp("\\b" + findQuote + "\\b","ig");
           newQuotes = [];
@@ -406,9 +407,9 @@ bot.on('message', msg => {
           }
         }
       }
-      else if (/^(\/|!)8ball/i.test(message.content)){
+      else if (/^(\/|!)8ball/i.test(messageContent)){
         reactMessage('🎱');
-        if (!botRegex_oneword.test(message.content)){
+        if (!botRegex_oneword.test(messageContent)){
         	names = ["your mom", "your neighbor", "your conscience", "a priest", "a psychic"];
         	randomNumber3 = Math.floor(Math.random()*names.length);
 
@@ -432,9 +433,9 @@ bot.on('message', msg => {
         }
       }
       // Youtube Video Search
-      else if (/^(\/|!)(youtube|yt|video)/i.test(message.content)){
+      else if (/^(\/|!)(youtube|yt|video)/i.test(messageContent)){
         reactMessage('📺');
-        searchTerm = message.content; searchTerm = searchTerm.replace(/(\/|!)(youtube|yt|video) \b/i,'');
+        searchTerm = messageContent; searchTerm = searchTerm.replace(/(\/|!)(youtube|yt|video) \b/i,'');
         var resultNum = 0;
         if (/\([0-9]+\)/i.test(searchTerm)){
             textsearchTerm = searchTerm.replace(/\([0-9]+\)/i,'');
@@ -452,20 +453,22 @@ bot.on('message', msg => {
            postMessage(results[resultNum].link);
         });
       }
+      //Anything else
       else {
         postMessage("That isn't a valid command...");
       }
     }
 
     //ENTERED A TAG
-    if (/\@(all|GSU)/i.test(message.content)) {
+    if (/\@(all|GSU)/i.test(messageContent)) {
       var reactions = ['♥','😳','🤡']; var randomNumber3 = Math.floor(Math.random()*reactions.length);
       reactMessage(reactions[randomNumber3]);
       postMessage("I don't do that anymore, try using one of the Discord tags (@everyone)");
     }
+
     //TAGGED SQUADBOT DIRECTLY
-    if (tagRegex_bot.test(message.content)) {
-        if (/(\bhi|hello|hey|heyo|sup|wassup|good morning\b).*?/i.test(message.content)){
+    if (tagRegex_bot.test(messageContent)) {
+        if (/(\bhi|hello|hey|heyo|sup|wassup|good morning\b).*?/i.test(messageContent)){
         response = ["Hello!", "What\'s up?", "Hey.", "Hi!", "How are you on this fine day?", "😜", "Yo.","giphy hi","giphy hello"];
         randomNumber = Math.floor(Math.random()*response.length);
         response = response[randomNumber];
@@ -477,14 +480,14 @@ bot.on('message', msg => {
           postMessage(response);
         }
       }
-      else if (/\b(thanks|(thank you)|thx)\b/i.test(message.content)) {
+      else if (/\b(thanks|(thank you)|thx)\b/i.test(messageContent)) {
         response = ["You're welcome! 😊", "Don't mention it!",
                     "No problem.", "Any time.","np","yw", "😘"];
         randomNumber = Math.floor(Math.random()*response.length);
         reactMessage('👍');
         postMessage(response[randomNumber]);
       }
-      else if (/\b(good night)|(bye)|(goodbye)|(goodnight)\b/i.test(message.content)) {
+      else if (/\b(good night)|(bye)|(goodbye)|(goodnight)\b/i.test(messageContent)) {
         response = ["Okay, bye!", "Laters.", "See ya!",
                     "In a while, crocodile.", "Good riddance.", "👋",
                     "Didn\'t wanna talk anyway...", "Peace.", "Peace out.", "✌",
@@ -499,7 +502,7 @@ bot.on('message', msg => {
           postMessage(response);
         }
       }
-      else if (/(\b(fuck|fuck you|suck|sucks)\b)/i.test(message.content)) {
+      else if (/(\b(fuck|fuck you|suck|sucks)\b)/i.test(messageContent)) {
         response = ["Well fuck you too.", "Why you gotta be so mean?",
                     "Whatever", "Rude...", "Ok...and?", "Damn okay then...", "😒",
                     "giphy fuck you", "giphy rude","giphy girl bye"];
@@ -513,7 +516,7 @@ bot.on('message', msg => {
           postMessage(response);
         }
       }
-      else if (/\bban\b/i.test(message.content)) {
+      else if (/\bban\b/i.test(messageContent)) {
         reactMessage('👩‍⚖️');
         if (users_mentioned.length>1){
           for (i=1;i<users_mentioned.length;i++){
@@ -537,7 +540,7 @@ bot.on('message', msg => {
         }
       }
       else if (!botRegex_oneword) {
-        cleverQuestion = message.content;
+        cleverQuestion = messageContent;
         cleverQuestion = cleverQuestion.replace(tagRegex_bot,'');
         cleverQuestion = cleverQuestion.replace(/^\s/gm,'');
         if (cleverQuestion) {
@@ -682,6 +685,10 @@ function postMessage(botResponse,type,args) {
 };
 
 function reactMessage(reaction) {
+  if (reaction.lenth > 1){
+    var randomNumber3 = Math.floor(Math.random()*reaction.length);
+    reaction = reaction[randomNumber3];
+  }
   message.react(reaction)
     .catch(console.error);
   console.log(`"Reacted: ${reaction}`);
