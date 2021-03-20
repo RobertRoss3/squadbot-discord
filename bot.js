@@ -139,7 +139,7 @@ bot.on('message', msg => {
   messageContent = message.content;
   //Most likely a DM
   if (!channel){
-    channel = 'direct-message';
+    channel = "direct-message";
   }
   // console.log(`${userName} (${userIDNum}) posted in #${channel} (${channelID}):`);
   console.log(`${userName} posted in #${channel}:`);
@@ -189,8 +189,8 @@ bot.on('message', msg => {
       }
     }
 
-    //F: Random chance CleverBot will respond to someone's message
-    if(Math.floor(Math.random()*50) == 0){
+    //F: Random chance CleverBot will respond to someone's message, or respond to a DM
+    if(Math.floor(Math.random()*50) == 0 || channel == "direct-message"){
       cleverQuestion = messageContent;
       cleverQuestion = cleverQuestion.replace(tagRegex_bot,'');
       cleverQuestion = cleverQuestion.replace(/^\s/gm,'');
