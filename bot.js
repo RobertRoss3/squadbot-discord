@@ -190,7 +190,7 @@ bot.on('message', msg => {
     }
 
     //F: Random chance CleverBot will respond to someone's message, or respond to a DM
-    if(Math.floor(Math.random()*50) == 0 || channel == "direct-message"){
+    if(Math.floor(Math.random()*60) == 0 || channel == "direct-message"){
       cleverQuestion = messageContent.replace(tagRegex_bot,'');
       cleverQuestion = cleverQuestion.replace(/^\s/gm,'');
       if (cleverQuestion) {
