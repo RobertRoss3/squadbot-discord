@@ -191,17 +191,10 @@ bot.on('message', msg => {
 
     //F: Random chance CleverBot will respond to someone's message, or respond to a DM
     if(Math.floor(Math.random()*50) == 0 || channel == "direct-message"){
-      cleverQuestion = messageContent;
-      cleverQuestion = cleverQuestion.replace(tagRegex_bot,'');
+      cleverQuestion = messageContent.replace(tagRegex_bot,'');
       cleverQuestion = cleverQuestion.replace(/^\s/gm,'');
       if (cleverQuestion) {
         console.log(`Contacting without reason Cleverbot AI server with: "${cleverQuestion}"`);
-        // clev.query()
-        // .then(function (response){
-        //   cleverResponse = response.output;
-        //   console.log("Cleverbot responded: " + cleverResponse);
-        //   postMessage(cleverResponse,'reply');
-        // });
         CleverbotFree(cleverQuestion)
         .then(response => postMessage(response));
       }
@@ -244,15 +237,15 @@ bot.on('message', msg => {
 
     //OTHER RESPONSES
     if (/\b(wtf|wth|what the (hell|fuck))\b/i.test(messageContent)) {
-      randomNumber = Math.floor(Math.random()*5);
+      randomNumber = Math.floor(Math.random()*2);
       if (randomNumber == 0) {
         postMessage("I know, right!?");
       }
     }
     if (/\b(fact|facts)\b/i.test(messageContent)) {
       reactMessage(['🤓','🧠','🌐','❗']);
-      randomNumber0 = Math.floor(Math.random()*2);
-      if (randomNumber0 == 1){
+      randomNumber0 = Math.floor(Math.random()*5);
+      if (randomNumber0 == 0){
         response = ["Fact? I know one! ","FACT: ","Here's a fact, ", "Fact time! ","Speaking of facts, did you know ",
                     "I know a thing or two about facts, like ", "Oh! Did you know that ", "Actually, ", "True, but "];
         randomNumber1 = Math.floor(Math.random()*response.length);
@@ -360,7 +353,6 @@ bot.on('message', msg => {
               answer = result.queryresult.pod[1].subpod[0].plaintext[0];
               if (!(answer)) {
                 answer = result.queryresult.pod[1].subpod[0].img[0].$.src;
-                // postMessage("Look at this...");
                 console.log(answer);
                 response = ["The graph looks like this: ", "Check this out: ",
                             "Look at this: ", "Here's a neat graphic:",
@@ -387,11 +379,11 @@ bot.on('message', msg => {
             }
           }
       });}
-      else if (/^(\/|!)info/.test(message.conent)) {
+      else if (/^(\/|!)info/.test(messageContent)) {
         reactMessage(['ℹ']);
         postMessage(botInfo);
       }
-      else if (/^(\/|!)restart/.test(message.conent)) {
+      else if (/^(\/|!)restart/.test(messageContent)) {
         reactMessage(['⚠']);
         restart();
       }
@@ -402,7 +394,7 @@ bot.on('message', msg => {
           randomNumber = Math.floor(Math.random()*Quotes.length);
           postMessage(Quotes[randomNumber]);
         } else {
-          findQuote = messageContent; findQuote = findQuote.replace(/[\!]quote /i,''); findQuote = findQuote.replace(/\b /ig,'|');
+          findQuote = messageContent.replace(/[\!]quote /i,''); findQuote = findQuote.replace(/\b /ig,'|');
           console.log(`Searching for quotes matching "${findQuote}"...`);
           botRegex_findQuote = new RegExp("\\b" + findQuote + "\\b","ig");
           newQuotes = [];
@@ -450,7 +442,7 @@ bot.on('message', msg => {
       // Youtube Video Search
       else if (/^(\/|!)(youtube|yt|video)/i.test(messageContent)){
         reactMessage(['📺']);
-        searchTerm = messageContent; searchTerm = searchTerm.replace(/(\/|!)(youtube|yt|video) \b/i,'');
+        searchTerm = messageContent.replace(/(\/|!)(youtube|yt|video) \b/i,'');
         var resultNum = 0;
         if (/\([0-9]+\)/i.test(searchTerm)){
             textsearchTerm = searchTerm.replace(/\([0-9]+\)/i,'');
@@ -554,17 +546,10 @@ bot.on('message', msg => {
         }
       }
       else if (!botRegex_oneword.test(messageContent)) {
-        cleverQuestion = messageContent;
-        cleverQuestion = cleverQuestion.replace(tagRegex_bot,'');
+        cleverQuestion = messageContent.replace(tagRegex_bot,'');
         cleverQuestion = cleverQuestion.replace(/^\s/gm,'');
         if (cleverQuestion) {
           console.log(`Contacting Cleverbot AI server with: "${cleverQuestion}"`);
-          // clev.query()
-          // .then(function (response){
-          //   cleverResponse = response.output;
-          //   console.log("Cleverbot responded: " + cleverResponse);
-          //   postMessage(cleverResponse,'reply');
-          // });
           CleverbotFree(cleverQuestion)
           .then(response => postMessage(response,'reply'));
         }
