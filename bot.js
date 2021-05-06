@@ -189,16 +189,16 @@ bot.on('message', msg => {
       }
     }
 
-    //F: Random chance CleverBot will respond to someone's message, or respond to a DM
-    if(Math.floor(Math.random()*60) == 0 || channel == "direct-message"){
-      cleverQuestion = messageContent.replace(tagRegex_bot,'');
-      cleverQuestion = cleverQuestion.replace(/^\s/gm,'');
-      if (cleverQuestion) {
-        console.log(`Contacting without reason Cleverbot AI server with: "${cleverQuestion}"`);
-        CleverbotFree(cleverQuestion)
-        .then(response => postMessage(response));
-      }
-    }
+    // //F: Random chance CleverBot will respond to someone's message, or respond to a DM
+    // if(Math.floor(Math.random()*60) == 0 || channel == "direct-message"){
+    //   cleverQuestion = messageContent.replace(tagRegex_bot,'');
+    //   cleverQuestion = cleverQuestion.replace(/^\s/gm,'');
+    //   if (cleverQuestion) {
+    //     console.log(`Contacting without reason Cleverbot AI server with: "${cleverQuestion}"`);
+    //     CleverbotFree(cleverQuestion)
+    //     .then(response => postMessage(response));
+    //   }
+    // }
 
     ////START OF MAIN PASSIVE FUNCTIONS
     ///These functions run if the user messages a trigger without directly invoking the bot
@@ -548,11 +548,11 @@ bot.on('message', msg => {
       else if (!botRegex_oneword.test(messageContent)) {
         cleverQuestion = messageContent.replace(tagRegex_bot,'');
         cleverQuestion = cleverQuestion.replace(/^\s/gm,'');
-        if (cleverQuestion) {
-          console.log(`Contacting Cleverbot AI server with: "${cleverQuestion}"`);
-          CleverbotFree(cleverQuestion)
-          .then(response => postMessage(response,'reply'));
-        }
+        // if (cleverQuestion) {
+        //   console.log(`Contacting Cleverbot AI server with: "${cleverQuestion}"`);
+        //   CleverbotFree(cleverQuestion)
+        //   .then(response => postMessage(response,'reply'));
+        // }
       }
     }
     ///END
