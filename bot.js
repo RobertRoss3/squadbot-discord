@@ -551,7 +551,20 @@ bot.on('message', msg => {
         if (cleverQuestion) {
           console.log(`Contacting Cleverbot AI server with: "${cleverQuestion}"`);
           CleverbotFree(cleverQuestion)
-          .then(response => postMessage(response,'reply'));
+          .then(response => {
+            if (/"You can have a great chat at www.cleverbot.com."/i.test(response)){
+              console.log("ERROR: CLEVERBOT ERROR: " + response)
+          		newresponse = ["I have nothing to say to that...",
+          		"I've lost my voice at the moment, try again later.",
+          		"I can't talk right now.",
+          		"My AI module has failed.", "I'm mute for the time being..."];
+          		randomNumber = Math.floor(Math.random()*newresponse.length);
+          		newresponse = newresponse[randomNumber];
+              postMessage(newresponse);
+            } else {
+              postMessage(response,'reply')
+            }
+          });
         }
       }
     }
