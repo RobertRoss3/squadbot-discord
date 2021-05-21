@@ -547,7 +547,7 @@ bot.on('message', msg => {
       }
       else if (!botRegex_oneword.test(messageContent)) {
         cleverQuestion = messageContent.replace(tagRegex_bot,'');
-        cleverQuestion = cleverQuestion.replace(/^\s/gm,'');
+        cleverQuestion = cleverQuestion.replace(/^\s*/gm,'');
         if (cleverQuestion) {
           console.log(`Contacting Cleverbot AI server with: "${cleverQuestion}"`);
           CleverbotFree(cleverQuestion)
