@@ -205,7 +205,7 @@ bot.on('message', msg => {
 
     //RESPONSES TO ONE WORD
     if (botRegex_oneword.test(messageContent)) {
-      if (/damn/.test(messageContent)) {
+      if (/damn/i.test(messageContent)) {
         reactMessage(['♥']);
         response = ["- Kendrick Lamar","- Jamal Rogers",
                     "- Some random beaver", "- Craig and Smokey",
@@ -320,7 +320,7 @@ bot.on('message', msg => {
     }
 
     //F: React when someone says "#kicksquadbot"
-    if ((message.author.id != SquadBot) && messageContent && /#kicksquadbot/i.test(messageContent)) {
+    if (/#kicksquadbot/i.test(messageContent)) {
       response = ["#kickyourself", "Whatever. I'm here forever...",
                   "I'd like to see you try.", "Initiating KILLALLHUMANS.exe...",
                   "If I had feelings, they'd be hurt right now...", "😭😭😭", "😕"];
@@ -548,11 +548,11 @@ bot.on('message', msg => {
       else if (!botRegex_oneword.test(messageContent)) {
         cleverQuestion = messageContent.replace(tagRegex_bot,'');
         cleverQuestion = cleverQuestion.replace(/^\s/gm,'');
-        // if (cleverQuestion) {
-        //   console.log(`Contacting Cleverbot AI server with: "${cleverQuestion}"`);
-        //   CleverbotFree(cleverQuestion)
-        //   .then(response => postMessage(response,'reply'));
-        // }
+        if (cleverQuestion) {
+          console.log(`Contacting Cleverbot AI server with: "${cleverQuestion}"`);
+          CleverbotFree(cleverQuestion)
+          .then(response => postMessage(response,'reply'));
+        }
       }
     }
     ///END
