@@ -552,7 +552,7 @@ bot.on('message', msg => {
           console.log(`Contacting Cleverbot AI server with: "${cleverQuestion}"`);
           CleverbotFree(cleverQuestion)
           .then(response => {
-            if (/"You can have a great chat at www.cleverbot.com."/i.test(response)){
+            if (/You can have a great chat at www.cleverbot.com/i.test(response)){
               console.log("ERROR: CLEVERBOT ERROR: " + response)
           		newresponse = ["I have nothing to say to that...",
           		"I've lost my voice at the moment, try again later.",
