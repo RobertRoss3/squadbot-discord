@@ -43,7 +43,6 @@ botInfo = "Hi, I'm SquadBot version 3.0.0! \n" +
 
 // All regular expressions or triggers for the bot
 botRegex_oneword = /^\s*[a-zA-Z0-9_@?!.,<>]+\s*$/;
-// tagRegex_bot = /(@Squadbot|<@!735964834331623505>).*?/i;
 tagRegex_bot = new RegExp("<(@!|@)(" + SquadBot + "|" + Bots + ")>", "g");
 /////////////////////////////////////////////////////////////////////////////////////
 
@@ -171,8 +170,7 @@ bot.on('message', msg => {
       }
       if(findQuote.length > 0){
         // console.log(findQuote);
-        randomNumber = Math.floor(Math.random()*findQuote.length);
-        findQuote = findQuote[randomNumber];
+        findQuote = findQuote[randomNumber(findQuote.length)];
         botRegex_findQuote = new RegExp("\\b" + findQuote + "\\b","ig");
         newQuotes = [];
         for (i = 0; i < Quotes.length; i++){                       //If a quote matches the search term, add it to a new list
@@ -180,25 +178,17 @@ bot.on('message', msg => {
             newQuotes.push(Quotes[i]);
           }
         }
-        randomNumber = Math.floor(Math.random()*25);
-        if (newQuotes.length > 0 && randomNumber == 0) {
+        if (newQuotes.length > 0 && randomChance(25)) {
           console.log(`Quoting without reason "${findQuote}"...`);
-          randomNumber2 = Math.floor(Math.random()*newQuotes.length);
-          postMessage(newQuotes[randomNumber2]);
+          postMessage(newQuotes[randomNumber(newQuotes.length)]);
         }
       }
     }
 
-    // //F: Random chance CleverBot will respond to someone's message, or respond to a DM
-    // if(Math.floor(Math.random()*60) == 0 || channel == "direct-message"){
-    //   cleverQuestion = messageContent.replace(tagRegex_bot,'');
-    //   cleverQuestion = cleverQuestion.replace(/^\s/gm,'');
-    //   if (cleverQuestion) {
-    //     console.log(`Contacting without reason Cleverbot AI server with: "${cleverQuestion}"`);
-    //     CleverbotFree(cleverQuestion)
-    //     .then(response => postMessage(response));
-    //   }
-    // }
+    //F: Random chance CleverBot will respond to someone's message, or respond to a DM
+    if(randomChance(1000000) || channel == "direct-message"){
+      askCleverbot();
+    }
 
     ////START OF MAIN PASSIVE FUNCTIONS
     ///These functions run if the user messages a trigger without directly invoking the bot
@@ -211,9 +201,7 @@ bot.on('message', msg => {
                     "- Some random beaver", "- Craig and Smokey",
                     "- Florida Evans","- Anthony Fantano",
                     "- 800lb lady's brother", "- Ron Simmons"];
-        randomNumber = Math.floor(Math.random()*response.length);
-        response = response[randomNumber];
-        postMessage(response);
+        postMessage(response[randomNumber(response.length)]);
       }
       else if (tagRegex_bot.test(messageContent)) {
         reactMessage(['⁉']);
@@ -221,8 +209,7 @@ bot.on('message', msg => {
                     "Yes?", "I'm awake!", "How can I help?",
                     "Huh?","You called?","giphy huh",
                     "giphy question mark", "giphy what?"];
-        randomNumber = Math.floor(Math.random()*response.length);
-        response = response[randomNumber];
+        response = response[randomNumber(response.length)];
         if (/\bgiphy \b/i.test(response)){
           response.replace(/\bgiphy \b/i, '');
           searchGiphy(response);
@@ -237,21 +224,18 @@ bot.on('message', msg => {
 
     //OTHER RESPONSES
     if (/\b(wtf|wth|what the (hell|fuck))\b/i.test(messageContent)) {
-      randomNumber = Math.floor(Math.random()*2);
-      if (randomNumber == 0) {
+      if (randomChance(2)) {
         postMessage("I know, right!?");
       }
     }
     if (/\b(fact|facts)\b/i.test(messageContent)) {
       reactMessage(['🤓','🧠','🌐','❗']);
-      randomNumber0 = Math.floor(Math.random()*5);
-      if (randomNumber0 == 0){
+      if (randomChance(5)){
         response = ["Fact? I know one! ","FACT: ","Here's a fact, ", "Fact time! ","Speaking of facts, did you know ",
                     "I know a thing or two about facts, like ", "Oh! Did you know that ", "Actually, ", "True, but "];
-        randomNumber1 = Math.floor(Math.random()*response.length);
-        randomNumber2 = Math.floor(Math.random()*factcount);
-        response = response[randomNumber1];
-        response += Facts[randomNumber2].charAt(0).toLowerCase() + Facts[randomNumber2].slice(1);
+        response = response[randomNumber(response.length)];
+        randomNumber = randomNumber(factcount);
+        response += Facts[randomNumber].charAt(0).toLowerCase() + Facts[randomNumber].slice(1);
         postMessage(response);
       }
     }
@@ -265,20 +249,17 @@ bot.on('message', msg => {
                     "lol nah dude",
                     "Not right now.",
                     "😤"];
-        randomNumber = Math.floor(Math.random()*response.length);
-        response = response[randomNumber];
         reactMessage(['⏰']);
-        postMessage(response,"reply");
+        postMessage(response[randomNumber(response.length)],"reply");
       }
       else {
         response1 = ["Woah... ","Uh, ","Aight so ","OOOOOOOOOOOKAY ","😑 ","😶 ","😲 ","😱 ",'Nephew...', "This ain't it, chief...", "Aight I got this"];
-        randomNumber = Math.floor(Math.random()*response1.length);
-        response = response1[randomNumber];
+        response = response1[randomNumber(response1.length)];
         response += ".\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.";
         response += "Looks like there's some fucked up shit up there! Here's a gif of ";
         topic = ['cat','duck','trippy','puppy','baby'];
         response2 = ['a cat!','a duck.','something trippy','puppies','a baby'];
-        randomNumber2 = Math.floor(Math.random()*topic.length);
+        randomNumber2 = randomNumber(topic.length);
         response += response2[randomNumber2];
         reactMessage(['🤯','😑','😲','😨']);
         postMessage(response);
@@ -293,8 +274,7 @@ bot.on('message', msg => {
                   "Can we not talk about eating ass right now?", userName + " NO",
                   "...", "Gross.", "🤢" , "Is that all you'll ever talk about?",
                   "Listen... NO", "😒", "😶", "😐" , "So onto a different subject!", "nah fam", "https://media.giphy.com/media/l4Ki2obCyAQS5WhFe/giphy.gif"];
-      randomNumber = Math.floor(Math.random()*response.length);
-      postMessage(response[randomNumber]);
+      postMessage(response[randomNumber(response.length)]);
     }
     if (/\b(issa|it's a) joke\b/i.test(messageContent)) {
       reactMessage(['🔪']);
@@ -302,21 +282,16 @@ bot.on('message', msg => {
       postMessage(response);
     }
     if (/\b(thanks|(thank you)|thx)\b/i.test(messageContent)) {
-      randomNumber2 = randomNumber = Math.floor(Math.random()*10);
-      if (randomNumber2 == 0) {
+      if (randomChance(10)) {
         response = ["You're welcome! 😊", "Don't mention it!",
                     "No problem.", "Any time."];
-        randomNumber = Math.floor(Math.random()*response.length);
         reactMessage(['♥']);
-        postMessage(response[randomNumber]);
+        postMessage(response[randomNumber(response.length)]);
       }
     }
     //F: Whenever @TheD posts, random chance to react
-    if (message.author.id == '702731740002648156') {
-      randomNumber = Math.floor(Math.random()*15);
-      if (randomNumber == 0) {
+    if (message.author.id == '702731740002648156' && randomChance(15)) {
         reactMessage(['🤓']);
-      }
     }
 
     //F: React when someone says "#kicksquadbot"
@@ -324,10 +299,8 @@ bot.on('message', msg => {
       response = ["#kickyourself", "Whatever. I'm here forever...",
                   "I'd like to see you try.", "Initiating KILLALLHUMANS.exe...",
                   "If I had feelings, they'd be hurt right now...", "😭😭😭", "😕"];
-      randomNumber = Math.floor(Math.random()*response.length);
       reactMessage(['😒']);
-      postMessage(response[randomNumber]);
-
+      postMessage(response[randomNumber(response.length)]);
     }
 
     ////START OF MAIN ACTIVE FUNCTIONS
@@ -358,8 +331,7 @@ bot.on('message', msg => {
                             "Look at this: ", "Here's a neat graphic:",
                             "I drew it out for you: ", "How about this?",
                             "Here's a visual aid"];
-                randomNumber = Math.floor(Math.random()*response.length);
-                postMessage(response[randomNumber]);
+                postMessage(response[randomNumber(response.length)]);
                 delay(1000);
                 postMessage(answer);
               } else {
@@ -371,8 +343,7 @@ bot.on('message', msg => {
                             "You can\'t do that yourself? lol It\'s ",
                             "Oh, that\'s easy! It\'s ",
                             "I\'m gonna go with"];
-                randomNumber = Math.floor(Math.random()*response.length);
-                postMessage(response[randomNumber]+ "\n" + answer);
+                postMessage(response[randomNumber(response.length)]+ "\n" + answer);
               }
             } else {
               answer = "I can\'t calculate that...";
@@ -391,8 +362,7 @@ bot.on('message', msg => {
         if (!Quotes_info){hold(5000);if (!quotecount){hold(2000);}}
         // reactMessage(['📝']);
         if (botRegex_oneword.test(messageContent)) {                  //If it's just "/quote"
-          randomNumber = Math.floor(Math.random()*Quotes.length);
-          postMessage(Quotes[randomNumber]);
+          postMessage(Quotes[randomNumber(Quotes.length)]);
         } else {
           findQuote = messageContent.replace(/[\!]quote /i,''); findQuote = findQuote.replace(/\b /ig,'|');
           console.log(`Searching for quotes matching "${findQuote}"...`);
@@ -405,12 +375,10 @@ bot.on('message', msg => {
           }
           if (newQuotes.length > 0) {
             console.log(`Found ${newQuotes.length} matching quotes for "${findQuote}"...`);
-            randomNumber2 = Math.floor(Math.random()*newQuotes.length);
-            postMessage(newQuotes[randomNumber2].replace(/\\n/g,'\n'));
+            postMessage(newQuotes[randomNumber(newQuotes.length)].replace(/\\n/g,'\n'));
           } else {
             console.log("Couldn't find any matching quotes...");      // If a quote wasn't found, procede as normal.
-            randomNumber = Math.floor(Math.random()*Quotes.length);
-            postMessage(Quotes[randomNumber].replace(/\\n/g,'\n'));
+            postMessage(Quotes[randomNumber(Quotes.length)].replace(/\\n/g,'\n'));
           }
         }
       }
@@ -418,7 +386,6 @@ bot.on('message', msg => {
         reactMessage(['🎱']);
         if (!botRegex_oneword.test(messageContent)){
         	names = ["your mom", "your neighbor", "your conscience", "a priest", "a psychic"];
-        	randomNumber3 = Math.floor(Math.random()*names.length);
 
           response1 = ["My sources say ","Hmm... I'm gonna go with ", "Um... ", "Dude, ", "I think we both know the answer is ", "Let's just say ",
                         "How about ", "The spirits tell me ", "I feel like I should say ", "Well, " + userName + ", I'm gonna say ", "I'm legally required to say "];
@@ -427,13 +394,10 @@ bot.on('message', msg => {
                   "fuck no","no","absolutely not","noooooooooooo","yes! jk, no", "yes","most likely, if you're not an idiot","definitely yes","yeah","it is certain","yussssss","absolutely","yes, but only if " + names[randomNumber3] + " says it's okay",
                    "without a doubt","yes, and make sure to hydrate","yes, 100%","totally","most likely","yeah, but wait a day","no. Wait nvm yes","yes... I think",
                    "I don't know","ask again later","I can't predict right now","think real hard first, then ask again","it's better not to tell you right now",
-                   "there's a good chance","a unanimous yes","ye probs","yeah nah nah yeah","maybe ask " + names[randomNumber3], "...sure..."
+                   "there's a good chance","a unanimous yes","ye probs","yeah nah nah yeah","maybe ask " + names[randomNumber(names.length)], "...sure..."
                    ];
 
-        	randomNumber1 = Math.floor(Math.random()*response1.length);
-          randomNumber2 = Math.floor(Math.random()*response2.length);
-
-          response = "🎱 " + response1[randomNumber1] + response2[randomNumber2]  + ".";
+          response = "🎱 " + response1[randomNumber(response1.length)] + response2[randomNumber(response2.length)]  + ".";
           postMessage(response);
         } else {
           postMessage("🎱 You have to ask a yes or no question.");
@@ -476,8 +440,7 @@ bot.on('message', msg => {
     if (tagRegex_bot.test(messageContent) || users_mentioned == "<@" + SquadBot + ">") {
         if (/\b(hi|hello|hey|heyo|sup|wassup|good morning)\b/i.test(messageContent)){
         response = ["Hello!", "What\'s up?", "Hey.", "Hi!", "How are you on this fine day?", "😜", "Yo.","giphy hi","giphy hello"];
-        randomNumber = Math.floor(Math.random()*response.length);
-        response = response[randomNumber];
+        response = response[randomNumber(response.length)];
         reactMessage(['♥']);
         if (/giphy/i.test(response)){
           response = response.replace(/giphy/i, '');
@@ -489,17 +452,15 @@ bot.on('message', msg => {
       else if (/\b(thanks|(thank you)|thx)\b/i.test(messageContent)) {
         response = ["You're welcome! 😊", "Don't mention it!",
                     "No problem.", "Any time.","np","yw", "😘"];
-        randomNumber = Math.floor(Math.random()*response.length);
         reactMessage(['👍']);
-        postMessage(response[randomNumber]);
+        postMessage(response[randomNumber(response.length)]);
       }
       else if (/\b(good night)|(bye)|(goodbye)|(goodnight)\b/i.test(messageContent)) {
         response = ["Okay, bye!", "Laters.", "See ya!",
                     "In a while, crocodile.", "Good riddance.", "👋",
                     "Didn\'t wanna talk anyway...", "Peace.", "Peace out.", "✌",
                      "giphy bye", "giphy goodbye", "giphy peace"];
-        randomNumber = Math.floor(Math.random()*response.length);
-        response = response[randomNumber];
+        response = response[randomNumber(response.length)];
         reactMessage(['👋']);
         if (/giphy/i.test(response)){
           response = response.replace(/giphy/i, '');
@@ -512,8 +473,7 @@ bot.on('message', msg => {
         response = ["Well fuck you too.", "Why you gotta be so mean?",
                     "Whatever", "Rude...", "Ok...and?", "Damn okay then...", "😒",
                     "giphy fuck you", "giphy rude","giphy girl bye"];
-        randomNumber = Math.floor(Math.random()*response.length);
-        response = response[randomNumber];
+        response = response[randomNumber(response.length)];
         reactMessage(['🤬']);
         if (/giphy/i.test(response)){
           response = response.replace(/giphy/i, '');
@@ -531,7 +491,7 @@ bot.on('message', msg => {
           response2 = ["YOU ARE BANNED! GTFO!!!!","if I see you again, I'm slapping the shit outta you",
           "go away.", "I will FLING you into THE SUN", userName + " doesn't like you.", "yeah imma need you to get outta here",
           "giphy go away", "giphy leave", "you don't gotta go home, but you gotta get the fuck up outta here"];
-          randomNumber = Math.floor(Math.random()*response2.length);
+          randomNumber = randomNumber(response2.length);
           if (/giphy/i.test(response2[randomNumber])){
             response = response2[randomNumber];
             response = response.replace(/giphy/i, '');
@@ -546,26 +506,7 @@ bot.on('message', msg => {
         }
       }
       else if (!botRegex_oneword.test(messageContent)) {
-        cleverQuestion = messageContent.replace(tagRegex_bot,'');
-        cleverQuestion = cleverQuestion.replace(/^\s*/gm,'');
-        if (cleverQuestion) {
-          console.log(`Contacting Cleverbot AI server with: "${cleverQuestion}"`);
-          CleverbotFree(cleverQuestion)
-          .then(response => {
-            if (/You can have a great chat at www.cleverbot.com/i.test(response)){
-              console.log("ERROR: CLEVERBOT ERROR: " + response)
-          		newresponse = ["I have nothing to say to that...",
-          		"I've lost my voice at the moment, try again later.",
-          		"I can't talk right now.",
-          		"My AI module has failed.", "I'm mute for the time being..."];
-          		randomNumber = Math.floor(Math.random()*newresponse.length);
-          		newresponse = newresponse[randomNumber];
-              postMessage(newresponse);
-            } else {
-              postMessage(response,'reply')
-            }
-          });
-        }
+        askCleverbot();
       }
     }
     ///END
@@ -586,14 +527,41 @@ function hold(ms){
               "*wakes up*","*sips coffee*",
               "https://media.giphy.com/media/26FxCOdhlvEQXbeH6/giphy.gif",
               "jeez, what time is it?"];
-  randomNumber = Math.floor(Math.random()*response.length);
-  response = response[randomNumber];
-  postMessage(response);
+  postMessage(response[randomNumber(response.length)]);
   var d = new Date();
   var d2 = null;
   do { d2 = new Date(); }
   while(d2-d < ms);
   console.log("End hold...")
+}
+
+function randomNumber(number=10){
+  randomNumber = Math.floor(Math.random()*number);
+  return randomNumber;
+}
+
+function randomChance(number=2){
+  return randomNumber(number) == 0;
+}
+
+function askCleverbot(){
+  cleverQuestion = messageContent.replace(tagRegex_bot,'');
+  cleverQuestion = cleverQuestion.replace(/^\s*/gm,'');
+  if (cleverQuestion) {
+    console.log(`Contacting Cleverbot AI server with: "${cleverQuestion}"`);
+    CleverbotFree(cleverQuestion)
+    .then(response => {
+      if (/You can have a great chat at www.cleverbot.com/i.test(response)){
+        console.log("ERROR: CLEVERBOT ERROR: " + response)
+        newresponse = ["I have nothing to say to that...",
+        "I've lost my voice at the moment, try again later.", "I can't talk right now.",
+        "My AI module has failed.", "I'm mute for the time being..."];
+        postMessage(newresponse[randomNumber(newresponse.length)]);
+      } else {
+        postMessage(response,'reply')
+      }
+    });
+  }
 }
 
 function searchGiphy(giphyToSearch, method) {
@@ -619,9 +587,8 @@ function searchGiphy(giphyToSearch, method) {
           postMessage(noImage);
         } else {
           console.log(`Available gifs: ${gifs.length}`);
-          randomNumber = Math.floor(Math.random()*gifs.length);
           if (gifs.length>0){
-            var id = gifs[randomNumber].id;
+            var id = gifs[randomNumber(gifs.length)].id;
             //giphyURL = 'http://i.giphy.com/' + id + '.gif';
             giphyURL = `https://media.giphy.com/media/${id}/giphy.gif`;
             postMessage(giphyURL);
@@ -698,7 +665,7 @@ function postMessage(botResponse,type,args) {
 
 function reactMessage(reaction) {
   if (reaction.length > 1){
-    var i = Math.floor(Math.random()*reaction.length);
+    var i = randomNumber(reaction.length);
     reaction = reaction[i];
   }
   message.react(reaction[0])
@@ -711,17 +678,13 @@ function restart(){
     console.log("Restarting...");
     response = ["Guess I fucked up!","Was it something I said?","Aw man...",
     "Oh...", "Sorry about that.","😒","Aight then..."];
-    randomNumber = Math.floor(Math.random()*response.length);
-    response = response[randomNumber];
     restarting = true;
-    postMessage(`${response} Restarting...`);
+    postMessage(`${response[randomNumber(response.length)]} Restarting...`);
   } else {
     response = ["Nah...","https://media.giphy.com/media/fnuSiwXMTV3zmYDf6k/giphy.gif","Um... No?",
     "I'm not gonna do that.","Access denied: Unauthorized user","Error: Does not compute",
     "What?","Nah chief"];
-    randomNumber = Math.floor(Math.random()*response.length);
-    response = response[randomNumber];
-    postMessage(response);
+    postMessage(response[randomNumber(response.length)]);
   }
 };
 /////////////////////////////////////////////////////////////////////////////////////
