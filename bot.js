@@ -541,7 +541,8 @@ function randomNumber(number=10){
 }
 
 function randomChance(number=2){
-  return randomNumber(number) == 0;
+  randomNumber = Math.floor(Math.random()*number)
+  return randomNumber == 0;
 }
 
 function askCleverbot(){
