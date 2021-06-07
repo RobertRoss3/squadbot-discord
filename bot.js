@@ -35,6 +35,9 @@ var restarting = false;
 // time arg is in milliseconds
 function delay(time) {var d1 = new Date();var d2 = new Date();while (d2.valueOf() < d1.valueOf() + time) {d2 = new Date();}}
 
+function randomNumber(n=10){return Math.floor(Math.random()*n);}
+function randomChance(n=1){return Math.floor(Math.random()*n) == 0;}
+
 botInfo = "Hi, I'm SquadBot version 3.0.0! \n" +
           "You can use commands like '!giphy [term]' and '!face' to post GIFs and ASCII faces. \n" +
           "Use !math [problem] to solve math problems with WolframAlpha. \n" +
@@ -155,8 +158,7 @@ bot.on('message', msg => {
     //F: Random chance SquadBot will say a quote using a word from someone's comment
     findQuote = messageContent.match(/\b(\w{5,})\b/g);    //Pick random words longer than 5 characters
     if (findQuote){
-      var i = findQuote.length;
-      while (i--) {
+      for (i = 0; i < findQuote.length; i++) {
         botRegex_findQuote = new RegExp("\\b" + findQuote[i] + "\\b","ig");
         newQuotes = [];
         for (j = 0; j < Quotes.length; j++){                        //If a quote matches the search term, add it to a new list
@@ -350,11 +352,11 @@ bot.on('message', msg => {
             }
           }
       });}
-      else if (/^(\/|!)info/.test(messageContent)) {
+      else if (/^(\/|!)info/i.test(messageContent)) {
         reactMessage(['ℹ']);
         postMessage(botInfo);
       }
-      else if (/^(\/|!)restart/.test(messageContent)) {
+      else if (/^(\/|!)restart/i.test(messageContent)) {
         reactMessage(['⚠']);
         restart();
       }
@@ -533,16 +535,6 @@ function hold(ms){
   do { d2 = new Date(); }
   while(d2-d < ms);
   console.log("End hold...")
-}
-
-function randomNumber(number=10){
-  randomNumber = Math.floor(Math.random()*number);
-  return randomNumber;
-}
-
-function randomChance(number=2){
-  randomNumber = Math.floor(Math.random()*number)
-  return randomNumber == 0;
 }
 
 function askCleverbot(){
